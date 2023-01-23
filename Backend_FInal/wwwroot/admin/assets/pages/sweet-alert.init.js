@@ -145,7 +145,7 @@ function executeExample(sub){
           Swal.fire({
             title: 'Metrica!',
             text: 'Modal with a Brand Logo.',
-            imageUrl: 'assets/images/logo-sm.png',
+            imageUrl: '~/client/assets/images/logo-sm.png',
             imageWidth: 80,
             imageHeight: 80,
             imageAlt: 'Custom image',
@@ -157,7 +157,7 @@ function executeExample(sub){
             title: 'Custom width, padding, background.',
             width: 600,
             padding: 50,
-            background: 'rgba(254,254,254,1) url(assets/images/pattern.png)',
+            background: 'rgba(254,254,254,1) url(~/client/assets/images/pattern.png)',
           })
         return;
         

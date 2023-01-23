@@ -5748,7 +5748,7 @@ div.hopscotch-bubble h3 {
 
 .cart-promo {
   padding: 90px;
-  background-image: url(../../assets/images/products/bg-cart.png);
+  background-image: url(../../~/client/assets/images/products/bg-cart.png);
   background-position: center center;
   background-size: cover;
 }
