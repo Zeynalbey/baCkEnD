@@ -899,7 +899,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\ViewComponents\" />
     <Folder Include="Areas\Admin\Views\Shared\Partials\" />
   </ItemGroup>
 

@@ -393,7 +393,7 @@ var theme = {
 tui.chart.registerTheme('myTheme', theme);
 options.theme = 'myTheme';
 
-var areaChart = tui.chart.areaChart(container, data, options);
+var areaChart = tui.chart.AreaChart(container, data, options);
 
 
 window.addEventListener('resize',function(){

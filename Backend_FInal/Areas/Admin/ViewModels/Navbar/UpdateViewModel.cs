@@ -1,4 +1,4 @@
-﻿namespace Backend_Final.ViewModels.Admin.Navbar
+﻿namespace Backend_Final.Areas.Admin.ViewModels.Navbar
 {
     public class UpdateViewModel
     {

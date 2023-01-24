@@ -10203,7 +10203,7 @@ function isPointOnColumn(series, options) {
     return true;
   }
 
-  if (series.line || series.area) {
+  if (series.line || series.Area) {
     var _ref2;
 
     return Boolean((_ref2 = options.xAxis) === null || _ref2 === void 0 ? void 0 : _ref2.pointOnColumn);
@@ -13572,7 +13572,7 @@ function initRange(series, categories) {
 function initZoomRange(series, options, categories) {
   var _ref;
 
-  if (!(series.line || series.area) || !((_ref = options.series) === null || _ref === void 0 ? void 0 : _ref.zoomable)) {
+  if (!(series.line || series.Area) || !((_ref = options.series) === null || _ref === void 0 ? void 0 : _ref.zoomable)) {
     return;
   }
 
@@ -13582,7 +13582,7 @@ function initZoomRange(series, options, categories) {
 function initShiftRange(series, options, categories) {
   var _ref2;
 
-  if (!(series.line || series.area || series.column || series.heatmap) || !((_ref2 = options.series) === null || _ref2 === void 0 ? void 0 : _ref2.shift)) {
+  if (!(series.line || series.Area || series.column || series.heatmap) || !((_ref2 = options.series) === null || _ref2 === void 0 ? void 0 : _ref2.shift)) {
     return;
   }
 
@@ -17737,7 +17737,7 @@ var plot_plot = {
       var series = state.series,
           options = state.options;
 
-      if (!(series.area || series.line)) {
+      if (!(series.Area || series.line)) {
         return;
       }
 
@@ -19751,7 +19751,7 @@ var lineSeries_LineSeries = /*#__PURE__*/function (_Component) {
     value: function setEventDetectType(series, options) {
       var _options$series;
 
-      if (series.area || series.column) {
+      if (series.Area || series.column) {
         this.eventDetectType = 'grouped';
       }
 
@@ -23307,10 +23307,10 @@ var pieSeries_PieSeries = /*#__PURE__*/function (_Component) {
     value: function getOpacity(active, selectedState) {
       var _this$theme2 = this.theme,
           select = _this$theme2.select,
-          areaOpacity = _this$theme2.areaOpacity;
+          areaOpacity = _this$theme2.AreaOpacity;
       var _ref13 = select,
-          selectedAreaOpacity = _ref13.areaOpacity,
-          restAreaOpacity = _ref13.restSeries.areaOpacity;
+          selectedAreaOpacity = _ref13.AreaOpacity,
+          restAreaOpacity = _ref13.restSeries.AreaOpacity;
       var selectThemeOpacity = active ? selectedAreaOpacity : restAreaOpacity;
       return selectedState ? selectThemeOpacity : areaOpacity;
     }
@@ -25359,8 +25359,8 @@ var areaSeries_AreaSeries = /*#__PURE__*/function (_Component) {
 
       var newOptions = areaSeries_objectSpread({}, options);
 
-      if ((_ref = newOptions.series) === null || _ref === void 0 ? void 0 : _ref.area) {
-        newOptions.series = areaSeries_objectSpread(areaSeries_objectSpread({}, newOptions.series), newOptions.series.area);
+      if ((_ref = newOptions.series) === null || _ref === void 0 ? void 0 : _ref.Area) {
+        newOptions.series = areaSeries_objectSpread(areaSeries_objectSpread({}, newOptions.series), newOptions.series.Area);
       }
 
       return newOptions;
@@ -25380,14 +25380,14 @@ var areaSeries_AreaSeries = /*#__PURE__*/function (_Component) {
           theme = chartState.theme,
           rawCategories = chartState.rawCategories;
 
-      if (!series.area) {
+      if (!series.Area) {
         throw new Error(message.noDataError(this.name));
       }
 
       var areaStackSeries;
       var options = this.getAreaOptions(chartState.options);
       var categories = chartState.categories;
-      this.theme = theme.series.area;
+      this.theme = theme.series.Area;
       this.rect = layout.plot;
       this.activeSeriesMap = getActiveSeriesMap(legend);
       this.startIndex = viewRange ? viewRange[0] : 0;
@@ -25398,12 +25398,12 @@ var areaSeries_AreaSeries = /*#__PURE__*/function (_Component) {
           tickDistance = _ref2.tickDistance,
           pointOnColumn = _ref2.pointOnColumn,
           tickCount = _ref2.tickCount;
-      var areaData = series.area.data;
+      var areaData = series.Area.data;
       this.baseYPosition = this.getBaseYPosition(limit);
 
-      if (stackSeries === null || stackSeries === void 0 ? void 0 : stackSeries.area) {
+      if (stackSeries === null || stackSeries === void 0 ? void 0 : stackSeries.Area) {
         this.isStackChart = true;
-        areaStackSeries = stackSeries.area;
+        areaStackSeries = stackSeries.Area;
       } else if (isRangeData((_getFirstValidValue = getFirstValidValue(areaData)) === null || _getFirstValidValue === void 0 ? void 0 : _getFirstValidValue.data)) {
         this.isRangeChart = true;
       }
@@ -25508,7 +25508,7 @@ var areaSeries_AreaSeries = /*#__PURE__*/function (_Component) {
       var pointOnColumn = renderOptions.pointOnColumn,
           tickDistance = renderOptions.tickDistance,
           pairModel = renderOptions.pairModel,
-          areaStackSeries = renderOptions.areaStackSeries;
+          areaStackSeries = renderOptions.AreaStackSeries;
       var rawData = series.rawData,
           name = series.name,
           seriesColor = series.color;
@@ -25699,12 +25699,12 @@ var areaSeries_AreaSeries = /*#__PURE__*/function (_Component) {
     value: function getAreaOpacity(name, color) {
       var _this$theme2 = this.theme,
           select = _this$theme2.select,
-          areaOpacity = _this$theme2.areaOpacity;
+          areaOpacity = _this$theme2.AreaOpacity;
       var active = this.activeSeriesMap[name];
       var selected = Object.values(this.activeSeriesMap).some(function (elem) {
         return !elem;
       });
-      return selected ? getRGBA(color, active ? select.areaOpacity : select.restSeries.areaOpacity) : getRGBA(color, areaOpacity);
+      return selected ? getRGBA(color, active ? select.AreaOpacity : select.restSeries.AreaOpacity) : getRGBA(color, areaOpacity);
     }
   }, {
     key: "renderAreaPointsModel",
@@ -27159,7 +27159,7 @@ function lineAreaChart_defineProperty(obj, key, value) { if (key in obj) { Objec
  *     @param {Array<string>} props.data.categories - Categories.
  *     @param {Array<Object>} props.data.series - Series data.
  *       @param {Array<Object>} props.data.series.line - Line series data. Coordinate types data is not possible.
- *       @param {Array<Object>} props.data.series.area - Area series data.
+ *       @param {Array<Object>} props.data.series.Area - Area series data.
  *   @param {Object} [props.options] - Options for making LineArea Chart.
  *     @param {Object} [props.options.chart]
  *       @param {string|Object} [props.options.chart.title] - Chart title text or options.
@@ -27172,7 +27172,7 @@ function lineAreaChart_defineProperty(obj, key, value) { if (key in obj) { Objec
  *       @param {number|string} [props.options.chart.height] - Chart height. 'auto' or if not write, the width of the parent container is followed. 'auto' or if not created, the height of the parent container is followed.
  *     @param {Object} [props.options.series] - Write common options in the upper depth and separate options to be applied to each chart.
  *       @param {Object} [props.options.series.line] - Options to be applied to the line chart. 'spline', 'showDot', 'dataLabels' is available. For specific information, refer to the {@link https://github.com/nhn/tui.chart|Line Chart guide} on github.
- *       @param {Object} [props.options.series.area] - Options to be applied to the area chart. 'stack', 'spline', 'showDot', 'dataLabels' is available. For specific information, refer to the {@link https://github.com/nhn/tui.chart|Area Chart guide} on github.
+ *       @param {Object} [props.options.series.Area] - Options to be applied to the area chart. 'stack', 'spline', 'showDot', 'dataLabels' is available. For specific information, refer to the {@link https://github.com/nhn/tui.chart|Area Chart guide} on github.
  *       @param {boolean} [props.options.series.zoomable=false] - Whether to use zoom feature or not.
  *       @param {boolean} [props.options.series.showDot=false] - Whether to show dot or not.
  *       @param {boolean} [props.options.series.spline=false] - Whether to make spline chart or not.
@@ -28534,12 +28534,12 @@ var boxSeries_BoxSeries = /*#__PURE__*/function (_Component) {
     value: function getSeriesColor(name, color) {
       var _this$theme = this.theme,
           select = _this$theme.select,
-          areaOpacity = _this$theme.areaOpacity;
+          areaOpacity = _this$theme.AreaOpacity;
       var active = this.activeSeriesMap[name];
       var selected = Object.values(this.activeSeriesMap).some(function (elem) {
         return !elem;
       });
-      return selected ? getRGBA(color, active ? select.areaOpacity : select.restSeries.areaOpacity) : getRGBA(color, areaOpacity);
+      return selected ? getRGBA(color, active ? select.AreaOpacity : select.restSeries.AreaOpacity) : getRGBA(color, areaOpacity);
     }
   }]);
 
@@ -32868,13 +32868,13 @@ var bulletSeries_BulletSeries = /*#__PURE__*/function (_Component) {
       var ignoreRestSeriesOpacity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var _this$theme3 = this.theme,
           select = _this$theme3.select,
-          areaOpacity = _this$theme3.areaOpacity;
+          areaOpacity = _this$theme3.AreaOpacity;
       var active = this.activeSeriesMap[seriesName];
       var selected = Object.values(this.activeSeriesMap).some(function (elem) {
         return !elem;
       });
-      var restOpacity = ignoreRestSeriesOpacity ? areaOpacity : select.restSeries.areaOpacity;
-      var selectedOpacity = active ? select.areaOpacity : restOpacity;
+      var restOpacity = ignoreRestSeriesOpacity ? areaOpacity : select.restSeries.AreaOpacity;
+      var selectedOpacity = active ? select.AreaOpacity : restOpacity;
       return selected ? selectedOpacity : areaOpacity;
     }
   }, {
@@ -33888,7 +33888,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
       var radarData = (_series$radar = series.radar) === null || _series$radar === void 0 ? void 0 : _series$radar.data;
       var radarPointsData = this.makeRadarPointsData(radarData, renderOptions);
       var circleModel = this.renderDotModels(radarPointsData);
-      this.models.area = (options === null || options === void 0 ? void 0 : (_options$series2 = options.series) === null || _options$series2 === void 0 ? void 0 : _options$series2.showArea) ? this.renderAreaModels(radarPointsData) : [];
+      this.models.Area = (options === null || options === void 0 ? void 0 : (_options$series2 = options.series) === null || _options$series2 === void 0 ? void 0 : _options$series2.showArea) ? this.renderAreaModels(radarPointsData) : [];
       this.models.line = this.renderLineModels(radarPointsData);
       this.models.dot = (options === null || options === void 0 ? void 0 : (_options$series3 = options.series) === null || _options$series3 === void 0 ? void 0 : _options$series3.showDot) ? circleModel : [];
 
@@ -34034,7 +34034,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
             return {
               distances: [].concat(radarSeries_toConsumableArray(acc.distances), [0]),
               linePoints: [].concat(radarSeries_toConsumableArray(acc.linePoints), [null]),
-              areaPoints: [].concat(radarSeries_toConsumableArray(acc.areaPoints), [{
+              areaPoints: [].concat(radarSeries_toConsumableArray(acc.AreaPoints), [{
                 x: centerX,
                 y: centerY
               }])
@@ -34046,7 +34046,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
           return {
             distances: [].concat(radarSeries_toConsumableArray(acc.distances), [distance]),
             linePoints: [].concat(radarSeries_toConsumableArray(acc.linePoints), [point]),
-            areaPoints: [].concat(radarSeries_toConsumableArray(acc.areaPoints), [point])
+            areaPoints: [].concat(radarSeries_toConsumableArray(acc.AreaPoints), [point])
           };
         }, {
           linePoints: [],
@@ -34056,7 +34056,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
 
         if (!isNull(data[0]) && !isNull(data[data.length - 1])) {
           radarPoints.linePoints.push(radarPoints.linePoints[0]);
-          radarPoints.areaPoints.push(radarPoints.areaPoints[0]);
+          radarPoints.AreaPoints.push(radarPoints.AreaPoints[0]);
         }
 
         return radarSeries_objectSpread(radarSeries_objectSpread({
@@ -34071,7 +34071,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
     value: function renderAreaModels(radarPointsData) {
       return radarPointsData.map(function (_ref12) {
         var distances = _ref12.distances,
-            areaPoints = _ref12.areaPoints,
+            areaPoints = _ref12.AreaPoints,
             name = _ref12.name,
             fillColor = _ref12.fillColor,
             seriesColor = _ref12.seriesColor;
@@ -34146,7 +34146,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
       var active = this.activeSeriesMap[name];
       var _this$theme2 = this.theme,
           select = _this$theme2.select,
-          areaOpacity = _this$theme2.areaOpacity;
+          areaOpacity = _this$theme2.AreaOpacity;
       var selected = Object.values(this.activeSeriesMap).some(function (elem) {
         return !elem;
       });
@@ -34154,7 +34154,7 @@ var radarSeries_RadarSeries = /*#__PURE__*/function (_Component) {
       var fillOpacity = NONE_AREA_OPACITY;
 
       if (showArea) {
-        var selectedAreaOpacity = active ? select.areaOpacity : select.restSeries.areaOpacity;
+        var selectedAreaOpacity = active ? select.AreaOpacity : select.restSeries.AreaOpacity;
         fillOpacity = selected ? selectedAreaOpacity : areaOpacity;
       }
 
@@ -36624,12 +36624,12 @@ var boxPlotSeries_BoxPlotSeries = /*#__PURE__*/function (_Component) {
     value: function getSeriesColor(seriesName, seriesColor) {
       var _this$theme2 = this.theme,
           select = _this$theme2.select,
-          areaOpacity = _this$theme2.areaOpacity;
+          areaOpacity = _this$theme2.AreaOpacity;
       var active = this.activeSeriesMap[seriesName];
       var selected = Object.values(this.activeSeriesMap).some(function (elem) {
         return !elem;
       });
-      var selectedOpacity = active ? select.areaOpacity : select.restSeries.areaOpacity;
+      var selectedOpacity = active ? select.AreaOpacity : select.restSeries.AreaOpacity;
       var opacity = selected ? selectedOpacity : areaOpacity;
       return getRGBA(seriesColor, opacity);
     }

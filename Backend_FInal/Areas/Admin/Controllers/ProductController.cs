@@ -211,7 +211,7 @@ namespace Backend_Final.Areas.Admin.Controllers
 
             async Task UpdateProductAsync()
             {
-                Product.Title = model.Title;
+                Product.Title = model.Title!;
                 Product.Price = model.Price;
 
                 var categoriesInDb = Product.ProductCategories.Select(bc => bc.CategoryId).ToList();

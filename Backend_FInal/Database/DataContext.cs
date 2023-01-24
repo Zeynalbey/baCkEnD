@@ -2,9 +2,9 @@
 using Backend_Final.Database.Models;
 using Backend_Final.Database.Models.Common;
 using Backend_Final.Extensions;
-using Backend_Final.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using DemoApplication.Database.Models;
 
 namespace Backend_Final.Database
 {
@@ -16,6 +16,7 @@ namespace Backend_Final.Database
 
         }
 
+        public DbSet<Slider> Sliders { get; set; }
         public DbSet<Navbar> Navbars { get; set; }
         public DbSet<SubNavbar> SubNavbars { get; set; }
         public DbSet<Product> Products { get; set; }

@@ -1,11 +1,9 @@
-﻿using Backend_Final.Database;
+﻿using Backend_Final.Areas.Admin.ViewModels.Navbar;
+using Backend_Final.Database;
 using Backend_Final.Database.Models;
-using Backend_Final.ViewModels.Admin.Navbar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using AddViewModel = Backend_Final.ViewModels.Admin.Navbar.AddViewModel;
 
 namespace Backend_Final.Controllers.Admin
 {
@@ -30,26 +28,26 @@ namespace Backend_Final.Controllers.Admin
                 .Select(n => new ListViewModel(
                    n.Id, n.Title, n.Order, n.IsBold, n.IsHeader,  n.IsFooter)).ToListAsync();
 
-            return View("~/Views/Admin/Navbar/List.cshtml", model);
+            return View(model);
         }
 
         [HttpGet("add", Name = "admin-navbar-add")]
         public IActionResult Add()
         {
-            return View("~/Views/Admin/Navbar/Add.cshtml");
+            return View();
         }
         [HttpPost("add", Name = "admin-navbar-add")]
-        public IActionResult Add(AddViewModel model)
+        public IActionResult Add(Backend_Final.Areas.Admin.ViewModels.Navbar.AddViewModel model)
         {
             if (!model.IsFooter && !model.IsHeader)
             {
                 ModelState.AddModelError(String.Empty, "You Must Choose Header or Footer");
-                return View("~/Views/Admin/Navbar/Add.cshtml", model);
+                return View(model);
             }
             
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Admin/Navbar/Add.cshtml",model);
+                return View(model);
             }
 
             var newModel = new Navbar()
@@ -88,7 +86,7 @@ namespace Backend_Final.Controllers.Admin
             };
       
 
-            return View("~/Views/Admin/Navbar/Update.cshtml",newModel);
+            return View(newModel);
         }
 
         [HttpPost("update/{id}", Name = "admin-navbar-update")]
@@ -97,11 +95,11 @@ namespace Backend_Final.Controllers.Admin
             if (!model.IsFooter && !model.IsHeader)
             {
                 ModelState.AddModelError(String.Empty, "You Must Choose Header or Footer");
-                return View("~/Views/Admin/Navbar/Update.cshtml", model);
+                return View(model);
             }
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Admin/Navbar/Update.cshtml", model);
+                return View(model);
             }
 
             var navbar = await _dataContext.Navbars.FirstOrDefaultAsync(n => n.Id == model.Id);

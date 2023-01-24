@@ -1,6 +1,6 @@
 ﻿using Backend_Final.Database.Models;
 
-namespace Backend_Final.ViewModels.Admin.Navbar
+namespace Backend_Final.Areas.Admin.ViewModels.Navbar
 {
     public class ListViewModel
     {

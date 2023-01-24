@@ -1,6 +1,6 @@
 ﻿using Backend_Final.Database;
 using Backend_Final.Database.Models;
-using Backend_Final.ViewModels.Admin.SubNavbar;
+using Backend_Final.Areas.Admin.ViewModels.SubNavbar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +30,7 @@ namespace Backend_Final.Controllers.Admin
                 sn => new ListSubViewModel(sn.Id,sn.Title,sn.Url, sn.Order,sn.Navbar.Title)
                 ).ToListAsync();
                
-            return View("~/Views/Admin/SubNavbar/List.cshtml", model);
+            return View(model);
         }
 
         [HttpGet("add", Name = "admin-subnavbar-add")]
@@ -41,7 +41,7 @@ namespace Backend_Final.Controllers.Admin
                 Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
             };
             
-            return View("~/Views/Admin/SubNavbar/Add.cshtml", model);
+            return View(model);
         }
         [HttpPost("add", Name = "admin-subnavbar-add")]
         public IActionResult Add(SubAddViewModel model)
@@ -52,7 +52,7 @@ namespace Backend_Final.Controllers.Admin
                 {
                     Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
                 };
-                return View("~/Views/Admin/Subnavbar/Add.cshtml", model);
+                return View(model);
             }
             var newModel = new SubNavbar()
             {
@@ -84,7 +84,7 @@ namespace Backend_Final.Controllers.Admin
                 NavbarId=subnavbar.NavbarId,
                 Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
             };
-            return View("~/Views/Admin/SubNavbar/Add.cshtml", model);
+            return View(model);
         }
         [HttpPost("update/{id}", Name = "admin-subnavbar-update")]
         public IActionResult Update(UpdateViewModel model)
@@ -94,7 +94,7 @@ namespace Backend_Final.Controllers.Admin
             {
 
                 model.Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList();
-                return View("~/Views/Admin/Subnavbar/update.cshtml", model);
+                return View(model);
             }
             var subnavbar = _dataContext.SubNavbars.Include(n=> n.Navbar).FirstOrDefault(n => n.Id == model.Id);
             if (subnavbar is null)
