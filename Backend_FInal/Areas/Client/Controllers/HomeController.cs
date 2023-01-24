@@ -1,12 +1,15 @@
-﻿using Backend_Final.Areas.Client.ViewModels.Home.Contact;
+﻿using Backend_Final.Areas.Admin.ViewModels.Slider;
+using Backend_Final.Areas.Client.ViewModels.Home.Contact;
 using Backend_Final.Areas.Client.ViewModels.Home.Index;
 using Backend_Final.Contracts.File;
 using Backend_Final.Database;
 using Backend_Final.Database.Models;
 using Backend_Final.Services.Abstracts;
+using Backend_Final.Services.Concretes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using IndexViewModel = Backend_Final.Areas.Client.ViewModels.Home.Index.IndexViewModel;
 
 namespace Backend_Final.Areas.Client.Controllers
 {
@@ -16,10 +19,13 @@ namespace Backend_Final.Areas.Client.Controllers
     public class HomeController : Controller
     {
         private readonly DataContext _dbContext;
+        private readonly IFileService _fileService;
 
-        public HomeController(DataContext dbContext)
+        public HomeController(DataContext dbContext, IFileService fileService)
         {
             _dbContext = dbContext;
+            _fileService = fileService;
+
         }
 
         [HttpGet("~/", Name = "client-home-index")]
@@ -28,19 +34,30 @@ namespace Backend_Final.Areas.Client.Controllers
         {
             var model = new IndexViewModel
             {
-                Products = await _dbContext.Products
-                .Select(p => new ProductListItemViewModel(
-                    p.Id,
-                    p.Title,
-                    p.Price,
-                    p.ProductImages!.Take(1)!.FirstOrDefault()! != null
-                        ? fileService.GetFileUrl(p.ProductImages!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
-                        : string.Empty,
-                    p.ProductImages!.Skip(1).Take(1)!.FirstOrDefault()! != null
-                        ? fileService.GetFileUrl(p.ProductImages!.Skip(1)!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
-                        : string.Empty)
-                )
-                .ToListAsync(),
+                //Products = await _dbContext.Products
+                //.Select(p => new ProductListItemViewModel(
+                //    p.Id,
+                //    p.Title,
+                //    p.Price,
+                //    p.ProductImages!.Take(1)!.FirstOrDefault()! != null
+                //        ? fileService.GetFileUrl(p.ProductImages!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
+                //        : string.Empty,
+                //    p.ProductImages!.Skip(1).Take(1)!.FirstOrDefault()! != null
+                //        ? fileService.GetFileUrl(p.ProductImages!.Skip(1)!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
+                //        : string.Empty)
+                //)
+                //.ToListAsync(),
+                Sliders = await _dbContext.Sliders.Select(s => new ListViewModel(
+                    s.Id,
+                    s.MainTitle, 
+                    s.Content,
+                    _fileService.GetFileUrl(s.BackgroundİmageInFileSystem, UploadDirectory.Slider),
+                    s.Button,
+                    s.ButtonRedirectUrl,
+                    s.Order,
+                    s.CreatedAt)).ToListAsync()
+
+                
             };
 
 
