@@ -29,15 +29,15 @@ namespace Backend_Final.Areas.Client.Controllers
             var model = new IndexViewModel
             {
                 Products = await _dbContext.Products
-                .Select(b => new ProductListItemViewModel(
-                    b.Id,
-                    b.Title,
-                    b.Price,
-                    b.ProductImages!.Take(1)!.FirstOrDefault()! != null
-                        ? fileService.GetFileUrl(b.ProductImages!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
+                .Select(p => new ProductListItemViewModel(
+                    p.Id,
+                    p.Title,
+                    p.Price,
+                    p.ProductImages!.Take(1)!.FirstOrDefault()! != null
+                        ? fileService.GetFileUrl(p.ProductImages!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
                         : string.Empty,
-                    b.ProductImages!.Skip(1).Take(1)!.FirstOrDefault()! != null
-                        ? fileService.GetFileUrl(b.ProductImages!.Skip(1)!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
+                    p.ProductImages!.Skip(1).Take(1)!.FirstOrDefault()! != null
+                        ? fileService.GetFileUrl(p.ProductImages!.Skip(1)!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
                         : string.Empty)
                 )
                 .ToListAsync(),

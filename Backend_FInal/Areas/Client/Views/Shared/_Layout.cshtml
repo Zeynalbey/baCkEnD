@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Backend_Final.Services.Abstracts;
+@inject IUserService userService;
+<!DOCTYPE html>
 <html lang="zxx">
 <head>
     <meta charset="UTF-8" />
@@ -114,25 +116,42 @@
                                                 <i class="pe-7s-search"></i>
                                             </a>
                                         </li>
-                                        <li class="dropdown d-none d-lg-block">
-                                            <button class="btn btn-link dropdown-toggle ht-btn p-0"
+                                        @if (userService.IsAuthenticated)
+                                        {
+                                            <a asp-route="client-account-dashboard">
+                                                @userService.GetCurrentUserFullName()
+                                            </a>
+                                        }
+                                        else
+                                        {
+
+                                            <li class="dropdown d-none d-lg-block">
+                                                <button class="btn btn-link dropdown-toggle ht-btn p-0"
                                                     type="button"
                                                     id="settingButton"
                                                     data-bs-toggle="dropdown"
                                                     aria-label="setting"
                                                     aria-expanded="false">
-                                                <i class="pe-7s-users"></i>
-                                            </button>
-                                            <ul class="dropdown-menu"
+                                                    <i class="pe-7s-users"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu"
                                                 aria-labelledby="settingButton">
-                                                <li>
-                                                    <a class="dropdown-item" href="my-account.html">My account</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="login-register.html">Login | Register</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="my-account.html">My account</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item">
+                                                            <a asp-route="client-auth-login"> Login </a> 
+                                                            <a asp-route="client-auth-register"> Register </a>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        }
+
+
+
                                         <li class="d-none d-lg-block">
                                             <a href="wishlist.html">
                                                 <i class="pe-7s-like"></i>
@@ -894,86 +913,6 @@
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
-        <!-- Begin Slider Area -->
-        <div class="slider-area">
-            <!-- Main Slider -->
-            <div class="swiper-container main-slider swiper-arrow with-bg_white">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide animation-style-01">
-                        <div class="slide-inner style-1 bg-height"
-                             data-bg-image="~/client/assets/images/slider/bg/1-1.jpg">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6 order-2 order-lg-1 align-self-center">
-                                        <div class="slide-content text-black">
-                                            <span class="offer">65% Off</span>
-                                            <h2 class="title">New Plant</h2>
-                                            <p class="short-desc">
-                                                Pronia, With 100% Natural, Organic & Plant Shop.
-                                            </p>
-                                            <div class="btn-wrap">
-                                                <a class="btn btn-custom-size xl-size btn-pronia-primary"
-                                                   href="shop.html">Discover Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-0 order-1 order-lg-2">
-                                        <div class="inner-img">
-                                            <div class="scene fill">
-                                                <div class="expand-width" data-depth="0.2">
-                                                    <img src="~/client/assets/images/website-images//1-1-524x617.png"
-                                                         alt="Inner Image" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide animation-style-01">
-                        <div class="slide-inner style-1 bg-height"
-                             data-bg-image="~/client/assets/images/slider/bg/1-1.jpg">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-6 order-2 order-lg-1 align-self-center">
-                                        <div class="slide-content text-black">
-                                            <span class="offer">65% Off</span>
-                                            <h2 class="title">New Plant</h2>
-                                            <p class="short-desc">
-                                                Pronia, With 100% Natural, Organic & Plant Shop.
-                                            </p>
-                                            <div class="btn-wrap">
-                                                <a class="btn btn-custom-size xl-size btn-pronia-primary"
-                                                   href="shop.html">Discover Now</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-0 order-1 order-lg-2">
-                                        <div class="inner-img">
-                                            <div class="scene fill">
-                                                <div class="expand-width" data-depth="0.2">
-                                                    <img src="~/client/assets/images/website-images//1-2-524x617.png"
-                                                         alt="Inner Image" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination d-md-none"></div>
-
-                <!-- Add Arrows -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
-        <!-- Slider Area End Here -->
-
         @RenderBody();
 
         <!-- Begin Footer Area -->

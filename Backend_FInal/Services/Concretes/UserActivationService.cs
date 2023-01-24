@@ -22,7 +22,7 @@ namespace Backend_Final.Services.Concretes
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IEmailService _emailService;
         private readonly IUrlHelper _urlHelper;
-        //private readonly DateTime _activationExpireDate;  
+        private readonly DateTime _activationExpireDate;
         private const string EMAIL_CONFIRMATION_ROUTE_NAME = "client-auth-activate";
         
 
@@ -30,18 +30,18 @@ namespace Backend_Final.Services.Concretes
             DataContext dataContext,
             IHttpContextAccessor httpContextAccessor,
             IEmailService emailService,
-            IUrlHelper urlHelper
-   /*         IConfiguration configuration*/)
+            IUrlHelper urlHelper,
+            IConfiguration configuration)
         {
             _dataContext = dataContext;
             _httpContextAccessor = httpContextAccessor;
             _emailService = emailService;
             _urlHelper = urlHelper;
 
-            //double activationValidityMonute = 
-            //    Convert.ToDouble(configuration.GetRequiredSection("ActivationValidityMinute").Value);
+            double activationValidityMonute =
+                    Convert.ToDouble(configuration.GetRequiredSection("ActivationValidityMinute").Value);
 
-            //_activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
+            _activationExpireDate = DateTime.Now.AddMinutes(activationValidityMonute);
         }
 
 
@@ -52,7 +52,7 @@ namespace Backend_Final.Services.Concretes
 
             var token = GenerateActivationToken();
             var activationUrl = GenerateUrl(token, EMAIL_CONFIRMATION_ROUTE_NAME);
-            //await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
+            await CreateUserActivationAsync(user, token, activationUrl, _activationExpireDate);
             var activationMessageDto = PrepareActivationMessage(user.Email!, activationUrl);
 
             _emailService.Send(activationMessageDto);
