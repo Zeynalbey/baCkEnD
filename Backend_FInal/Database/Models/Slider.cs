@@ -6,12 +6,12 @@ namespace DemoApplication.Database.Models
     {
         public string? MainTitle { get; set; }
         public string? Content { get; set; }
-        public string? Backgroundİmage { get; set; }
-
-        public string? BackgroundİmageInFileSystem { get; set; }
+        public string? SecondTitle { get; set; }
         public string? Button { get; set; }
         public string? ButtonRedirectUrl { get; set; }
         public int Order { get; set; }
+        public string? İmage { get; set; }
+        public string? İmageInSystem { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

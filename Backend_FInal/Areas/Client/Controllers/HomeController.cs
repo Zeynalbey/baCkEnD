@@ -49,15 +49,14 @@ namespace Backend_Final.Areas.Client.Controllers
                 //.ToListAsync(),
                 Sliders = await _dbContext.Sliders.Select(s => new ListViewModel(
                     s.Id,
-                    s.MainTitle, 
-                    s.Content,
-                    _fileService.GetFileUrl(s.BackgroundİmageInFileSystem, UploadDirectory.Slider),
-                    s.Button,
-                    s.ButtonRedirectUrl,
+                    s.MainTitle!,
+                    s.Content!,
+                    s.SecondTitle,
+                    s.Button!,
+                    s.ButtonRedirectUrl!,
                     s.Order,
+                    _fileService.GetFileUrl(s.İmageInSystem, UploadDirectory.Slider),
                     s.CreatedAt)).ToListAsync()
-
-                
             };
 
 

@@ -2,24 +2,34 @@
 {
     public class ListViewModel
     {
-        public int Id { get; set; }
-        public string MainTitle { get; set; }
-        public string Content { get; set; }
-        public string ImageName { get; set; }
-        public string Button { get; set; }
-        public string ButtonRedirectUrl { get; set; }
-        public int Order { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public ListViewModel(int id, string mainTitle, string content, string imageName, string button, string buttonRedirectUrl, int order, DateTime createdAt)
+        public ListViewModel(int id,
+            string mainTitle,
+            string content,
+            string secondTitle,
+            string button,
+            string buttonRedirectUrl,
+            int order,
+            string imageName,
+            DateTime createdAt)
         {
             Id = id;
             MainTitle = mainTitle;
             Content = content;
-            ImageName = imageName;
+            SecondTitle = secondTitle;
             Button = button;
             ButtonRedirectUrl = buttonRedirectUrl;
             Order = order;
+            ImageName = imageName;
             CreatedAt = createdAt;
         }
+        public int Id { get; set; }
+        public string MainTitle { get; set; }
+        public string Content { get; set; }
+        public string SecondTitle { get; set; }
+        public string Button { get; set; }
+        public string ButtonRedirectUrl { get; set; }
+        public int Order { get; set; }
+        public string ImageName { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

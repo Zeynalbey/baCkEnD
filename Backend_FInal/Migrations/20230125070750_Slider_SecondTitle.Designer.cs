@@ -4,6 +4,7 @@ using Backend_Final.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendFinal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230125070750_Slider_SecondTitle")]
+    partial class SliderSecondTitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -468,6 +471,12 @@ namespace BackendFinal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Backgroundİmage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BackgroundİmageInFileSystem")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Button")
                         .HasColumnType("nvarchar(max)");
 
@@ -491,12 +500,6 @@ namespace BackendFinal.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("İmage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("İmageInSystem")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

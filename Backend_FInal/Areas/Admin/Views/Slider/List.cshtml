@@ -19,11 +19,14 @@
                 <table class="table table-striped mb-0">
                     <thead>
                         <tr>
-                         
+                            <th>MainTitle</th>
+                            <th>SecondTitle</th>
                             <th>Content</th>
                             <th>Button</th>
                             <th>ButtonRedirectUrl</th>
                             <th>Created at</th>
+                            <th>Image</th>
+                            <th>BackgroundImage</th>
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
@@ -33,10 +36,12 @@
                             <tr>
                                
                                 <td>@slider.MainTitle</td>
+                                <td>@slider.SecondTitle</td>
                                 <td>@slider.Content</td>
                                 <td>@slider.Button</td>
                                 <td>@slider.ButtonRedirectUrl</td>
                                 <td>@slider.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                <td>@slider.ImageName</td>
                                 <td class="text-end d-flex mt-3">
                                     <a asp-route="admin-slider-update" asp-route-id="@slider.Id"><i class="las la-pen text-secondary font-16"></i></a>
 
