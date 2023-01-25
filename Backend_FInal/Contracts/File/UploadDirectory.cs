@@ -4,5 +4,6 @@
     {
         Product = 1,
         Slider = 2,
+        Payment = 4,
     }
 }

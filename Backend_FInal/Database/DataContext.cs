@@ -15,7 +15,7 @@ namespace Backend_Final.Database
         {
 
         }
-
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Navbar> Navbars { get; set; }
         public DbSet<SubNavbar> SubNavbars { get; set; }

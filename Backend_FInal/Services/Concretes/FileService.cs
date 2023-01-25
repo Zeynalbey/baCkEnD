@@ -54,6 +54,8 @@ namespace Backend_Final.Services.Concretes
 
             switch (uploadDirectory)
             {
+                case UploadDirectory.Payment:
+                    return Path.Combine(startPath, "Payments");
                 case UploadDirectory.Slider:
                     return Path.Combine(startPath, "Sliders");
                 default:
@@ -72,6 +74,8 @@ namespace Backend_Final.Services.Concretes
 
             switch (uploadDirectory)
             {
+                case UploadDirectory.Payment:
+                    return $"{initialSegment}/Payments/{fileName}";
                 case UploadDirectory.Slider:
                     return $"{initialSegment}/Sliders/{fileName}";
                 default:
