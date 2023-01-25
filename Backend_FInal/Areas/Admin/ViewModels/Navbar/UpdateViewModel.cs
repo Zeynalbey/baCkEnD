@@ -9,18 +9,13 @@
         public string Url { get; set; }
         public int Order { get; set; }
         public bool IsBold { get; set; }
-        public bool IsHeader { get; set; }
-        public bool IsFooter { get; set; }
-
-        public UpdateViewModel(int id, string title, string url, int order, bool isBold, bool isHeader, bool isFooter)
+        public UpdateViewModel(int id, string title, string url, int order, bool isBold)
         {
             Id = id;
             Title = title;
             Url = url;
             Order = order;
             IsBold = isBold;
-            IsHeader = isHeader;
-            IsFooter = isFooter;
         }
 
         public UpdateViewModel()

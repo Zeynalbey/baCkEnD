@@ -19,12 +19,9 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>IsBold</th>
                             <th>Order</th>
-                            <th>IsHeader</th>
-                            <th>IsFooter</th>
-
-
+                            <th>Url</th>
+                            <th>Isbold</th>
 
                             <th class="text-end">Action</th>
                         </tr>
@@ -34,12 +31,9 @@
                         {
                             <tr>
                                 <td>@navbar.Title</td>
-                                <td>@navbar.IsBold</td>
                                 <td>@navbar.Order</td>
-                                <td>@navbar.IsHeader</td>
-                                <td>@navbar.IsFooter</td>
-
-
+                                <td>@navbar.Url</td>
+                                <td>@navbar.IsBold</td>
 
                                 <td class="text-end">
                                     <a asp-route="admin-navbar-update" asp-route-id="@navbar.Id" ><i class="las la-pen text-secondary font-16"></i></a>

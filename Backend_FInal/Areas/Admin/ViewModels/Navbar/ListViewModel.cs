@@ -7,18 +7,16 @@ namespace Backend_Final.Areas.Admin.ViewModels.Navbar
         public int Id { get; set; }
         public string Title { get; set; }
         public int Order { get; set; }
+        public string Url { get; set; }
         public bool IsBold { get; set; }
-        public bool IsHeader { get; set; }
-        public bool IsFooter { get; set; }
 
-        public ListViewModel(int id,string title, int order, bool isBold, bool isHeader, bool isFooter)
+        public ListViewModel(int id, string title, int order, string url, bool isBold)
         {
+            Id = id;
             Title = title;
             Order = order;
+            Url = url;
             IsBold = isBold;
-            IsHeader = isHeader;
-            IsFooter = isFooter;
-            Id = id;
         }
     }
 }

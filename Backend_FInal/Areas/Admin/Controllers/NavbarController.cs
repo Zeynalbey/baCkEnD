@@ -26,7 +26,7 @@ namespace Backend_Final.Controllers.Admin
         {
             var model = await _dataContext.Navbars
                 .Select(n => new ListViewModel(
-                   n.Id, n.Title, n.Order, n.IsBold, n.IsHeader,  n.IsFooter)).ToListAsync();
+                   n.Id, n.Title!, n.Order, n.Url!, n.IsBold)).ToListAsync();
 
             return View(model);
         }
@@ -37,14 +37,8 @@ namespace Backend_Final.Controllers.Admin
             return View();
         }
         [HttpPost("add", Name = "admin-navbar-add")]
-        public IActionResult Add(Backend_Final.Areas.Admin.ViewModels.Navbar.AddViewModel model)
-        {
-            if (!model.IsFooter && !model.IsHeader)
-            {
-                ModelState.AddModelError(String.Empty, "You Must Choose Header or Footer");
-                return View(model);
-            }
-            
+        public async Task <IActionResult> AddAsync(Backend_Final.Areas.Admin.ViewModels.Navbar.AddViewModel model)
+        {          
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -56,11 +50,9 @@ namespace Backend_Final.Controllers.Admin
                 Url = model.Url,
                 Order = model.Order,
                 IsBold = model.IsBold,
-                IsHeader = model.IsHeader,
-                IsFooter = model.IsFooter,
             };
-            _dataContext.Navbars.Add(newModel);
-            _dataContext.SaveChanges();
+            await _dataContext.Navbars.AddAsync(newModel);
+            await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-navbar-list");
         }
@@ -77,12 +69,10 @@ namespace Backend_Final.Controllers.Admin
             var newModel = new UpdateViewModel()
             {
                 Id = model.Id,
-                Title = model.Title,
-                Url = model.Url,
+                Title = model.Title!,
+                Url = model.Url!,
                 Order = model.Order,
-                IsBold=model.IsBold,
-                IsHeader=model.IsHeader,
-                IsFooter=model.IsFooter,    
+                IsBold = model.IsBold
             };
       
 
@@ -90,13 +80,8 @@ namespace Backend_Final.Controllers.Admin
         }
 
         [HttpPost("update/{id}", Name = "admin-navbar-update")]
-        public async Task<IActionResult> Update(UpdateViewModel model)
+        public async Task<IActionResult> UpdateAsync(UpdateViewModel model)
         {
-            if (!model.IsFooter && !model.IsHeader)
-            {
-                ModelState.AddModelError(String.Empty, "You Must Choose Header or Footer");
-                return View(model);
-            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -112,10 +97,8 @@ namespace Backend_Final.Controllers.Admin
             navbar.Url = model.Url;
             navbar.Order = model.Order;
             navbar.IsBold = model.IsBold;
-            navbar.IsHeader = model.IsHeader;
-            navbar.IsFooter = model.IsFooter;
 
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-navbar-list");
         }

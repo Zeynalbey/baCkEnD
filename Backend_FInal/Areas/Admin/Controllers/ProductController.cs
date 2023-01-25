@@ -44,9 +44,9 @@ namespace Backend_Final.Areas.Admin.Controllers
                         b.Title,
                         b.Price,
                         b.CreatedAt,
-                        b.ProductCategories
+                        b.ProductCategories!
                             .Select(bc => bc.Category)
-                                .Select(c => new ListItemViewModel.CategoryViewModeL(c.Title, c.Parent.Title)).ToList()))
+                                .Select(c => new ListItemViewModel.CategoryViewModeL(c.Title, c.Parent!.Title)).ToList()))
                 .ToListAsync();
 
             return View(model);
@@ -112,7 +112,7 @@ namespace Backend_Final.Areas.Admin.Controllers
             {
                 var Product = new Product
                 {
-                    Title = model.Title,
+                    Title = model.Title!,
                     Price = model.Price
                 };
 
@@ -155,7 +155,7 @@ namespace Backend_Final.Areas.Admin.Controllers
                 Categories = _dataContext.Categories
                     .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
                     .ToList(),
-                CategoryIds = Product.ProductCategories.Select(bc => bc.CategoryId).ToList(),
+                CategoryIds = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList(),
             };
 
             return View(model);
@@ -204,7 +204,7 @@ namespace Backend_Final.Areas.Admin.Controllers
                    .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
                    .ToList();
 
-                model.CategoryIds = Product.ProductCategories.Select(bc => bc.CategoryId).ToList();
+                model.CategoryIds = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList();
 
                 return View(model);
             }
@@ -214,11 +214,11 @@ namespace Backend_Final.Areas.Admin.Controllers
                 Product.Title = model.Title!;
                 Product.Price = model.Price;
 
-                var categoriesInDb = Product.ProductCategories.Select(bc => bc.CategoryId).ToList();
+                var categoriesInDb = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList();
                 var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
                 var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
 
-                Product.ProductCategories.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
+                Product.ProductCategories!.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
 
                 foreach (var categoryId in categoriesToAdd)
                 {

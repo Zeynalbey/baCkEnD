@@ -71,11 +71,6 @@ namespace Backend_Final.Areas.Admin.Controllers
                 CreatedAt = DateTime.Now,
             };
 
-            //foreach (var entity in _dataContext.Sliders)
-            //    _dataContext.Sliders.Remove(entity);
-
-
-
             _dataContext.Sliders.Add(slider);
 
             _dataContext.SaveChanges();
@@ -84,19 +79,19 @@ namespace Backend_Final.Areas.Admin.Controllers
 
         }
 
-        //[HttpPost("delete/{id}", Name = "admin-slider-delete")]
-        //public async Task<IActionResult> Delete([FromRoute] int id)
-        //{
-        //    var slider = await _dataContext.Sliders.FirstOrDefaultAsync(b => b.Id == id);
-        //    if (slider is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _fileService.DeleteAsync(slider.BackgroundİmageInFileSystem, UploadDirectory.Slider);
-        //    _dataContext.Sliders.Remove(slider);
-        //    await _dataContext.SaveChangesAsync();
+        [HttpPost("delete/{id}", Name = "admin-slider-delete")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var slider = await _dataContext.Sliders.FirstOrDefaultAsync(b => b.Id == id);
+            if (slider is null)
+            {
+                return NotFound();
+            }
+            await _fileService.DeleteAsync(slider.İmageInSystem, UploadDirectory.Slider);
+            _dataContext.Sliders.Remove(slider);
+            await _dataContext.SaveChangesAsync();
 
-        //    return RedirectToRoute("admin-slider-list");
-        //}
+            return RedirectToRoute("admin-slider-list");
+        }
     }
 }
