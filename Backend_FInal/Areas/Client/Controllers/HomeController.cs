@@ -58,29 +58,29 @@ namespace Backend_Final.Areas.Client.Controllers
             return View(model);
         }
 
-        [HttpGet("contact")]
-        public ActionResult Contact()
-        {
-            return View();
-        }
+        //[HttpGet("contact")]
+        //public ActionResult Contact()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost("contact")]
-        public ActionResult Contact([FromForm] CreateViewModel contactViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+        //[HttpPost("contact")]
+        //public ActionResult Contact([FromForm] CreateViewModel contactViewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View();
+        //    }
 
-            _dbContext.Contacts.Add(new Contact
-            {
-                Name = contactViewModel.Name,
-                Email = contactViewModel.Email,
-                Message = contactViewModel.Message,
-                Phone = contactViewModel.PhoneNumber,
-            });
+        //    _dbContext.Contacts.Add(new Contact
+        //    {
+        //        Name = contactViewModel.Name,
+        //        Email = contactViewModel.Email,
+        //        Message = contactViewModel.Message,
+        //        Phone = contactViewModel.PhoneNumber,
+        //    });
 
-            return RedirectToAction(nameof(Index));
-        }
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

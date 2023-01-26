@@ -33,13 +33,13 @@ namespace Backend_Final.Areas.Client.Controllers
                 return NotFound();
             }
 
-            var productsCookieViewModel = await _basketService.AddBasketProductAsync(product);
-            if (productsCookieViewModel.Any())
-            {
-                return ViewComponent(nameof(ShopCart), productsCookieViewModel);
-            }
+            //var productsCookieViewModel = await _basketService.AddBasketProductAsync(product);
+            //if (productsCookieViewModel.Any())
+            //{
+            //    return ViewComponent(nameof(ShopCart), productsCookieViewModel);
+            //}
 
-            return ViewComponent(nameof(ShopCart));
+            return View/*Component(nameof(ShopCart))*/();
         }
 
         [HttpGet("delete/{id}", Name = "client-basket-delete")]
@@ -62,7 +62,7 @@ namespace Backend_Final.Areas.Client.Controllers
 
             HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
 
-            return ViewComponent(nameof(ShopCart));
+            return View/*Component(nameof(ShopCart))*/();
         }
     }
 }

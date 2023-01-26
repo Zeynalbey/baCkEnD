@@ -1,35 +1,36 @@
-﻿namespace Backend_Final.Areas.Admin.ViewModels.Product
+﻿using Backend_Final.Areas.Admin.ViewModels.Category;
+using Backend_Final.Areas.Admin.ViewModels.Size;
+using Backend_Final.Areas.Admin.ViewModels.Tag;
+
+namespace Backend_Final.Areas.Admin.ViewModels.Product
 {
     public class ListItemViewModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public decimal Price { get; set; }
-        public List<CategoryViewModeL> Categories { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
-        public ListItemViewModel(int id, string title, decimal price,DateTime createdAt, List<CategoryViewModeL> categories)
+        public ListItemViewModel(int id, string? name, string description, 
+            int price, int rate, List<CategoryViewModel> categories, 
+            List<TagViewModel> tags, List<SizeViewModel> sizes, 
+            List<ColorViewModel> colors)
         {
             Id = id;
-            Title = title;
+            Name = name;
+            Description = description;
             Price = price;
-            CreatedAt = createdAt;
+            Rate = rate;
             Categories = categories;
+            Tags = tags;
+            Sizes = sizes;
+            Colors = colors;
         }
 
-        public class CategoryViewModeL
-        {
-            public CategoryViewModeL(string title, string parentTitle)
-            {
-                Title = title;
-                ParentTitle = parentTitle;
-            }
+        public int? Id { get; set; }
+        public string? Name { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
+        public int Rate { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
+        public List<TagViewModel> Tags { get; set; }
+        public List<SizeViewModel> Sizes { get; set; }
+        public List<ColorViewModel> Colors { get; set; }
 
-            public string Title { get; set; }
-            public string ParentTitle { get; set; }
-
-
-        }
     }
 }

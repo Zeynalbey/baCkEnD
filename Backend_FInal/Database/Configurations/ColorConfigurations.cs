@@ -5,12 +5,12 @@ using System.Reflection.Emit;
 
 namespace Backend_Final.Database.Configurations
 {
-    public class ContactConfigurations : IEntityTypeConfiguration<Contact>
+    public class ColorConfigurations : IEntityTypeConfiguration<Color>
     {
-        public void Configure(EntityTypeBuilder<Contact> builder)
+        public void Configure(EntityTypeBuilder<Color> builder)
         {
             builder
-               .ToTable("Contacts");
+                .ToTable("Colors");
         }
     }
 }

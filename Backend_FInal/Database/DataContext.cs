@@ -15,13 +15,19 @@ namespace Backend_Final.Database
         {
 
         }
+
+        public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ProductColor> ProductColors { get; set; }
+        public DbSet<ProductSize> ProductSizes { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Size> Sizes { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Navbar> Navbars { get; set; }
         public DbSet<SubNavbar> SubNavbars { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Basket> Baskets { get; set; }
@@ -35,6 +41,27 @@ namespace Backend_Final.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly<Program>();
+            modelBuilder.Entity<Category>().HasData(
+               new() { Id = 1, Title = "Flowers" },
+               new() { Id = 2, Title = "Trees" },
+               new() { Id = 3, Title = "Grasses" });
+
+            modelBuilder.Entity<Size>().HasData(
+               new() { Id = 1, Name = "Small" },
+               new() { Id = 2, Name = "Medium" },
+               new() { Id = 3, Name = "Large" });
+
+            modelBuilder.Entity<Color>().HasData(
+               new() { Id = 1, Name = "Red" },
+               new() { Id = 2, Name = "Green" },
+               new() { Id = 3, Name = "Yellow" });
+
+            modelBuilder.Entity<Tag>().HasData(
+               new() { Id = 1, Name = "#bagdagul" },
+               new() { Id = 2, Name = "#cemendegul" },
+               new() { Id = 3, Name = "#sehradagul" });
+
+
         }
     }
 
@@ -94,7 +121,13 @@ namespace Backend_Final.Database
                 }
             }
         }
+
     }
 
     #endregion
+
+
+   
+
+    
 }

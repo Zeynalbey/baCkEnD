@@ -5,12 +5,12 @@ using System.Reflection.Emit;
 
 namespace Backend_Final.Database.Configurations
 {
-    public class CategoryConfigurations : IEntityTypeConfiguration<Category>
+    public class TagConfigurations : IEntityTypeConfiguration<Tag>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Tag> builder)
         {
             builder
-               .ToTable("Categories");
+                .ToTable("Tags");
         }
     }
 }

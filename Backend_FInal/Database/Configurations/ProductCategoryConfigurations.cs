@@ -13,17 +13,17 @@ namespace Backend_Final.Database.Configurations
                 .ToTable("ProductCategories");
 
             builder
-                .HasKey(bc => new { bc.CategoryId, bc.ProductId });
+                .HasKey(pc => new { pc.CategoryId, pc.ProductId });
 
             builder
-               .HasOne(bc => bc.Product)
-               .WithMany(b => b.ProductCategories)
-               .HasForeignKey(bc => bc.ProductId);
+               .HasOne(pc => pc.Product)
+               .WithMany(p => p.ProductCategories)
+               .HasForeignKey(pc => pc.ProductId);
 
             builder
-                .HasOne(bc => bc.Category)
+                .HasOne(pc => pc.Category)
                 .WithMany(c => c.ProductCategories)
-                .HasForeignKey(bc => bc.CategoryId);
+                .HasForeignKey(pc => pc.CategoryId);
         }
     }
 }

@@ -5,12 +5,12 @@ using System.Reflection.Emit;
 
 namespace Backend_Final.Database.Configurations
 {
-    public class BasketConfigurations : IEntityTypeConfiguration<Basket>
+    public class SizeConfigurations : IEntityTypeConfiguration<Size>
     {
-        public void Configure(EntityTypeBuilder<Basket> builder)
+        public void Configure(EntityTypeBuilder<Size> builder)
         {
             builder
-                .ToTable("Baskets");
+                .ToTable("Sizes");
         }
     }
 }

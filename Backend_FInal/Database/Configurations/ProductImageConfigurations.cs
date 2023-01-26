@@ -13,9 +13,9 @@ namespace Backend_Final.Database.Configurations
                 .ToTable("ProductImages");
 
             builder
-                .HasOne(bi => bi.Product)
-                .WithMany(b => b.ProductImages)
-                .HasForeignKey(bi => bi.ProductId);
+               .HasOne(pi => pi.Product)
+               .WithMany(p => p.ProductImages)
+               .HasForeignKey(pi => pi.ProductId);
         }
     }
 }

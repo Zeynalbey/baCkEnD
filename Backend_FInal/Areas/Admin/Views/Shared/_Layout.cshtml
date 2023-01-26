@@ -72,9 +72,6 @@
 
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a asp-route="admin-Product-list" class="nav-link">Products</a>
-                        </li><!--end nav-item-->
-                        <li class="nav-item">
                             <a asp-route="admin-navbar-list" class="nav-link">Navbars</a>
                         </li><!--end nav-item-->
                         <li class="nav-item">
@@ -86,7 +83,10 @@
                         <li class="nav-item">
                             <a asp-route="admin-payment-list" class="nav-link">Payments</a>
                         </li><!--end nav-item-->
-                        
+                        <li class="nav-item">
+                            <a asp-route="admin-product-list" class="nav-link">Products</a>
+                        </li><!--end nav-item-->
+
                     </ul><!--end nav-->
                 </div><!-- end Dashboards -->
             </div>
@@ -94,7 +94,6 @@
         </div><!-- end main-menu-inner-->
     </div>
     <!-- end leftbar-tab-menu-->
-
     <!-- Top Bar Start -->
     <div class="topbar">
         <!-- Navbar -->
@@ -126,9 +125,8 @@
                         </h6>
 
                         <div class="notification-menu" id="notification-menu" data-simplebar>
-
                         </div>
-                        
+
                         <!-- All-->
                         <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
                             View all <i class="fi-arrow-right"></i>
@@ -156,7 +154,7 @@
                         <a class="dropdown-item" href="#"><i class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
                     </div>
                 </li><!--end topbar-profile-->
-                
+
                 <li class="notification-list">
                     <a class="nav-link arrow-none nav-icon offcanvas-btn" href="#" data-bs-toggle="offcanvas" data-bs-target="#Appearance" role="button" aria-controls="Rightbar">
                         <i class="ti ti-settings ti-spin"></i>
