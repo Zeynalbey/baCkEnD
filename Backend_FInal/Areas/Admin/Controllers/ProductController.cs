@@ -228,104 +228,244 @@ namespace Backend_Final.Areas.Admin.Controllers
 
         #endregion
 
-        //#region Update
 
-        //[HttpGet("update/{id}", Name = "admin-Product-update")]
-        //public async Task<IActionResult> UpdateAsync([FromRoute] int id)
-        //{
-        //    var Product = await _dataContext.Products.Include(b => b.ProductCategories).FirstOrDefaultAsync(b => b.Id == id);
-        //    if (Product is null)
-        //    {
-        //        return NotFound();
-        //    }
+        #region Update
 
-        //    var model = new AddViewModel
-        //    {
-        //        Id = Product.Id,
-        //        Title = Product.Title,
-        //        Price = Product.Price,
-        //        Categories = _dataContext.Categories
-        //            .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
-        //            .ToList(),
-        //        CategoryIds = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList(),
-        //    };
+        [HttpGet("update/{id}", Name = "admin-product-update")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id)
+        {
+            var product = await _dataContext.Products
+                .Include(p => p.ProductCategories)
+                .Include(p => p.ProductSizes)
+                .Include(p => p.ProductColors)
+                .Include(p => p.ProductTags).FirstOrDefaultAsync(p => p.Id == id);
 
-        //    return View(model);
-        //}
+            if (product is null)
+            {
+                return NotFound();
+            }
 
-        //[HttpPost("update/{id}", Name = "admin-Product-update")]
-        //public async Task<IActionResult> UpdateAsync(AddViewModel model)
-        //{
-        //    var Product = await _dataContext.Products.Include(b => b.ProductCategories).FirstOrDefaultAsync(b => b.Id == model.Id);
-        //    if (Product is null)
-        //    {
-        //        return NotFound();
-        //    }
+            var model = new AddViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description!,
+                Price = product.Price,
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return GetView(model);
-        //    }
+                CategoryIds = product.ProductCategories!.Select(pc => pc.CategoryId).ToList(),
+                SizeIds = product.ProductSizes!.Select(ps => ps.SizeId).ToList(),
+                ColorIds = product.ProductColors!.Select(pco => pco.ColorId).ToList(),
+                TagIds = product.ProductTags!.Select(pt => pt.TagId).ToList(),
+
+                Categories = await _dataContext.Categories.Select(c => new CategoryListItemViewModel(c.Id, c.Title)).ToListAsync(),
+                Sizes = await _dataContext.Sizes.Select(c => new SizeListItemViewModel(c.Id, c.Name)).ToListAsync(),
+                Colors = await _dataContext.Colors.Select(c => new ColorListItemViewModel(c.Id, c.Name!)).ToListAsync(),
+                Tags = await _dataContext.Tags.Select(c => new TagListItemViewModel(c.Id, c.Name)).ToListAsync(),
+
+            };
+            return View(model);
+        }
+
+        [HttpPost("update/{id}", Name = "admin-product-update")]
+        public async Task<IActionResult> UpdateAsync(AddViewModel model)
+        {
+            var product = await _dataContext.Products
+                .Include(p => p.ProductCategories)
+                .Include(p => p.ProductSizes)
+                .Include(p => p.ProductColors)
+                .Include(p => p.ProductTags).FirstOrDefaultAsync(p => p.Id == model.Id);
+
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return GetView(model);
+            }
+
+            foreach (var id in model.CategoryIds)
+            {
+                if (!await _dataContext.Catagories.AnyAsync(c => c.Id == id))
+                {
+                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    return GetView(model);
+                }
+            }
+
+            foreach (var id in model.SizeIds)
+            {
+                if (!await _dataContext.Sizes.AnyAsync(s => s.Id == id))
+                {
+                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    return GetView(model);
+                }
+            }
 
 
-        //    foreach (var categoryId in model.CategoryIds)
-        //    {
-        //        if (!_dataContext.Categories.Any(c => c.Id == categoryId))
-        //        {
-        //            ModelState.AddModelError(string.Empty, "Something went wrong");
-        //            _logger.LogWarning($"Category with id({categoryId}) not found in db ");
-        //            return GetView(model);
-        //        }
+            foreach (var id in model.ColorIds)
+            {
+                if (!await _dataContext.Colors.AnyAsync(c => c.Id == id))
+                {
+                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    return GetView(model);
+                }
+            }
 
-        //    }
+            foreach (var id in model.TagIds)
+            {
+                if (!await _dataContext.Tags.AnyAsync(t => t.Id == id))
+                {
+                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    return GetView(model);
+                }
+            }
+            UpdateProductAsync();
+
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-product-list");
+
+            async Task UpdateProductAsync()
+            {
+                product.Name = model.Name;
+                product.Description = model.Description;
+                product.Price = model.Price;
+                product.UpdatedAt = DateTime.Now;
+
+                #region Catagory
+                var categoriesInDb = product.ProductCategories.Select(bc => bc.CategoryId).ToList();
+                var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
+                var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
+
+                product.ProductCategories.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
+
+                foreach (var categoryId in categoriesToAdd)
+                {
+                    var productCatagory = new ProductCategory
+                    {
+                        CategoryId = categoryId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductCatagories.AddAsync(productCatagory);
+                }
+                #endregion
+
+                #region Color
+                var colorInDb = product.ProductColors.Select(bc => bc.ColorId).ToList();
+                var colorToRemove = colorInDb.Except(model.ColorIds).ToList();
+                var colorToAdd = model.ColorIds.Except(colorInDb).ToList();
+
+                product.ProductColors.RemoveAll(bc => colorToRemove.Contains(bc.ColorId));
 
 
-        //    //await _fileService.DeleteAsync(Product.ImageNameInFileSystem, UploadDirectory.Product);
-        //    //var imageFileNameInSystem = await _fileService.UploadAsync(model.Image, UploadDirectory.Product);
+                foreach (var colorId in colorToAdd)
+                {
+                    var productColor = new ProductColor
+                    {
+                        ColorId = colorId,
+                        Product = product,
+                    };
 
-        //    await UpdateProductAsync();
-
-        //    return RedirectToRoute("admin-Product-list");
-
-
+                    await _dataContext.ProductColors.AddAsync(productColor);
+                }
+                #endregion
 
 
-        //    IActionResult GetView(AddViewModel model)
-        //    {
-        //        model.Categories = _dataContext.Categories
-        //           .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
-        //           .ToList();
+                #region Size
+                var sizeInDb = product.ProductSizes.Select(bc => bc.SizeId).ToList();
+                var sizeToRemove = sizeInDb.Except(model.SizeIds).ToList();
+                var sizeToAdd = model.SizeIds.Except(sizeInDb).ToList();
 
-        //        model.CategoryIds = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList();
+                product.ProductSizes.RemoveAll(bc => sizeToRemove.Contains(bc.SizeId));
 
-        //        return View(model);
-        //    }
 
-        //    async Task UpdateProductAsync()
-        //    {
-        //        Product.Title = model.Title!;
-        //        Product.Price = model.Price;
+                foreach (var sizeId in sizeToAdd)
+                {
+                    var productSize = new ProductSize
+                    {
+                        SizeId = sizeId,
+                        Product = product,
+                    };
 
-        //        var categoriesInDb = Product.ProductCategories!.Select(bc => bc.CategoryId).ToList();
-        //        var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
-        //        var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
+                    await _dataContext.ProductSizes.AddAsync(productSize);
+                }
 
-        //        Product.ProductCategories!.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
+                #endregion
 
-        //        foreach (var categoryId in categoriesToAdd)
-        //        {
-        //            var ProductCategory = new ProductCategory
-        //            {
-        //                CategoryId = categoryId,
-        //                Product = Product,
-        //            };
+                #region Tag
+                var tagInDb = product.ProductTags.Select(bc => bc.TagId).ToList();
+                var tagToRemove = tagInDb.Except(model.TagIds).ToList();
+                var tagToAdd = model.TagIds.Except(tagInDb).ToList();
 
-        //            _dataContext.ProductCategories.Add(ProductCategory);
-        //        }
+                product.ProductTags.RemoveAll(bc => tagToRemove.Contains(bc.TagId));
 
-        //        _dataContext.SaveChanges();
-        //    }
-        //}
+
+                foreach (var tagId in tagToAdd)
+                {
+                    var productTag = new ProductTag
+                    {
+                        TagId = tagId,
+                        Product = product,
+                    };
+
+                    await _dataContext.ProductTags.AddAsync(productTag);
+                }
+                #endregion
+            }
+
+
+            IActionResult GetView(AddViewModel model)
+            {
+
+                model.Categories = _dataContext.Catagories
+                   .Select(c => new CategoryListViewModel(c.Id, c.Title))
+                   .ToList();
+
+                model.CategoryIds = product.ProductCategories.Select(c => c.CategoryId).ToList();
+
+
+                model.Sizes = _dataContext.Sizes
+                 .Select(c => new SizeListViewModel(c.Id, c.Name))
+                 .ToList();
+
+                model.SizeIds = product.ProductSizes.Select(c => c.SizeId).ToList();
+
+
+
+                model.Colors = _dataContext.Colors
+                 .Select(c => new ColorListViewModel(c.Id, c.Name))
+                 .ToList();
+
+                model.ColorIds = product.ProductColors.Select(c => c.ColorId).ToList();
+
+
+
+                model.Tags = _dataContext.Tags
+                 .Select(c => new TagListViewModel(c.Id, c.Name))
+                 .ToList();
+
+                model.TagIds = product.ProductTags.Select(c => c.TagId).ToList();
+
+                return View(model);
+            }
+
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
         //#endregion
 
