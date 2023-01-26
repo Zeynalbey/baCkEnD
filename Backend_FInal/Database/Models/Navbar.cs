@@ -1,5 +1,4 @@
 ﻿using Backend_Final.Database.Models.Common;
-using Backend_Final.Database.Models.Common;
 
 namespace Backend_Final.Database.Models
 {

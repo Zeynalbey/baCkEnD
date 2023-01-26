@@ -28,7 +28,7 @@ namespace Backend_Final.Areas.Admin.Controllers
         [HttpGet("list", Name = "admin-payment-list")]
         public async Task<IActionResult> ListAsync()
         {
-            var model = await _dataContext.Payments.Select(p => new ListViewModel(
+            var model = await _dataContext.Payments.Select(p => new PaymentListViewModel(
                 p.Id,
                 p.Title!,
                 p.Content!,

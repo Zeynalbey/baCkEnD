@@ -2,6 +2,6 @@
 {
     public class IndexViewModel
     {
-        public List<ListViewModel> Payments { get; set; }
+        public List<PaymentListViewModel> Payments { get; set; }
     }
 }

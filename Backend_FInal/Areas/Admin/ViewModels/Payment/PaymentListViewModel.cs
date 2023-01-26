@@ -1,8 +1,8 @@
 ﻿namespace Backend_Final.Areas.Admin.ViewModels.Payment
 {
-    public class ListViewModel
+    public class PaymentListViewModel
     {
-        public ListViewModel(int id,
+        public PaymentListViewModel(int id,
             string title,
             string content,
             string iconImage)

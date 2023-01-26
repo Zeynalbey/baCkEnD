@@ -1,4 +1,5 @@
-﻿using Backend_Final.Areas.Admin.ViewModels.Slider;
+﻿using Backend_Final.Areas.Admin.ViewModels.Payment;
+using Backend_Final.Areas.Admin.ViewModels.Slider;
 using Backend_Final.Areas.Client.ViewModels.Home.Contact;
 using Backend_Final.Areas.Client.ViewModels.Home.Index;
 using Backend_Final.Contracts.File;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IndexViewModel = Backend_Final.Areas.Client.ViewModels.Home.Index.IndexViewModel;
+
 
 namespace Backend_Final.Areas.Client.Controllers
 {
@@ -34,29 +36,21 @@ namespace Backend_Final.Areas.Client.Controllers
         {
             var model = new IndexViewModel
             {
-                //Products = await _dbContext.Products
-                //.Select(p => new ProductListItemViewModel(
-                //    p.Id,
-                //    p.Title,
-                //    p.Price,
-                //    p.ProductImages!.Take(1)!.FirstOrDefault()! != null
-                //        ? fileService.GetFileUrl(p.ProductImages!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
-                //        : string.Empty,
-                //    p.ProductImages!.Skip(1).Take(1)!.FirstOrDefault()! != null
-                //        ? fileService.GetFileUrl(p.ProductImages!.Skip(1)!.Take(1)!.FirstOrDefault()!.ImageNameInFileSystem!, UploadDirectory.Product)
-                //        : string.Empty)
-                //)
-                //.ToListAsync(),
+
                 Sliders = await _dbContext.Sliders.Select(s => new ListViewModel(
                     s.Id,
                     s.MainTitle!,
                     s.Content!,
-                    s.SecondTitle,
+                    s.SecondTitle!,
                     s.Button!,
                     s.ButtonRedirectUrl!,
                     s.Order,
                     _fileService.GetFileUrl(s.İmageInSystem, UploadDirectory.Slider),
-                    s.CreatedAt)).ToListAsync()
+                    s.CreatedAt)).ToListAsync(),
+
+                Payments = await _dbContext.Payments.Select(p => new PaymentListViewModel(
+                    p.Id, p.Title!, p.Content!, _fileService.GetFileUrl(p.IconİmageInSystem, UploadDirectory.Payment))).ToListAsync()
+
             };
 
 
