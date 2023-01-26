@@ -90,6 +90,8 @@ namespace Backend_Final.Areas.Admin.Controllers
                 return GetView(model);
             }
 
+            #region Errors
+
             foreach (var categoryId in model.CategoryIds)
             {
                 if (!_dataContext.Categories.Any(c => c.Id == categoryId))
@@ -128,9 +130,8 @@ namespace Backend_Final.Areas.Admin.Controllers
                     _logger.LogWarning($"Category with id({tagId}) not found in db ");
                     return GetView(model);
                 }
-
             }
-
+            #endregion
 
             AddProduct();
 
@@ -138,12 +139,9 @@ namespace Backend_Final.Areas.Admin.Controllers
 
             return RedirectToRoute("admin-product-list");
 
-
-
-
+            #region GetView
             IActionResult GetView(AddViewModel model)
             {
-
                 model.Categories = _dataContext.Categories
                    .Select(c => new CategoryListItemViewModel(c.Id, c.Title))
                    .ToList();
@@ -162,6 +160,9 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                 return View(model);
             }
+            #endregion
+
+            #region AddProduct
 
             Product AddProduct()
             {
@@ -175,6 +176,8 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                 _dataContext.Products.Add(product);
 
+                #region AddProductCategory
+
                 foreach (var categoryId in model.CategoryIds)
                 {
                     var ProductCategory = new ProductCategory
@@ -186,6 +189,9 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                     _dataContext.ProductCategories.Add(ProductCategory);
                 }
+                #endregion
+
+                #region AddProductSize
 
                 foreach (var sizeId in model.SizeIds)
                 {
@@ -198,6 +204,9 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                     _dataContext.ProductSizes.Add(ProductSize);
                 }
+                #endregion
+
+                #region AddProductColor
                 foreach (var colorId in model.ColorIds)
                 {
                     var ProductColor = new ProductColor
@@ -209,6 +218,9 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                     _dataContext.ProductColors.Add(ProductColor);
                 }
+                #endregion
+
+                #region AddProductTag
                 foreach (var tagId in model.TagIds)
                 {
                     var ProductTag = new ProductTag
@@ -220,14 +232,15 @@ namespace Backend_Final.Areas.Admin.Controllers
 
                     _dataContext.ProductTags.Add(ProductTag);
                 }
+                #endregion
 
                 return product;
             }
+            #endregion
         }
 
 
         #endregion
-
 
         #region Update
 
@@ -245,6 +258,7 @@ namespace Backend_Final.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            #region AddViewModel
             var model = new AddViewModel
             {
                 Id = product.Id,
@@ -263,6 +277,8 @@ namespace Backend_Final.Areas.Admin.Controllers
                 Tags = await _dataContext.Tags.Select(c => new TagListItemViewModel(c.Id, c.Name)).ToListAsync(),
 
             };
+            #endregion
+
             return View(model);
         }
 
@@ -285,42 +301,43 @@ namespace Backend_Final.Areas.Admin.Controllers
                 return GetView(model);
             }
 
-            foreach (var id in model.CategoryIds)
+            #region Errors
+
+            foreach (var id in model.CategoryIds!)
             {
-                if (!await _dataContext.Catagories.AnyAsync(c => c.Id == id))
+                if (!await _dataContext.Categories.AnyAsync(c => c.Id == id))
                 {
-                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    ModelState.AddModelError(String.Empty, "Something went wrong");
                     return GetView(model);
                 }
             }
-
-            foreach (var id in model.SizeIds)
+            foreach (var id in model.SizeIds!)
             {
                 if (!await _dataContext.Sizes.AnyAsync(s => s.Id == id))
                 {
-                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    ModelState.AddModelError(String.Empty, "Something went wrong");
                     return GetView(model);
                 }
             }
-
-
-            foreach (var id in model.ColorIds)
+            foreach (var id in model.ColorIds!)
             {
                 if (!await _dataContext.Colors.AnyAsync(c => c.Id == id))
                 {
-                    ModelState.AddModelError(String.Empty, "something went wrong");
+                    ModelState.AddModelError(String.Empty, "Something went wrong");
+                    return GetView(model);
+                }
+            }
+            foreach (var id in model.TagIds!)
+            {
+                if (!await _dataContext.Tags.AnyAsync(t => t.Id == id))
+                {
+                    ModelState.AddModelError(String.Empty, "Something went wrong");
                     return GetView(model);
                 }
             }
 
-            foreach (var id in model.TagIds)
-            {
-                if (!await _dataContext.Tags.AnyAsync(t => t.Id == id))
-                {
-                    ModelState.AddModelError(String.Empty, "something went wrong");
-                    return GetView(model);
-                }
-            }
+            #endregion
+
             UpdateProductAsync();
 
             await _dataContext.SaveChangesAsync();
@@ -332,36 +349,36 @@ namespace Backend_Final.Areas.Admin.Controllers
                 product.Name = model.Name;
                 product.Description = model.Description;
                 product.Price = model.Price;
-                product.UpdatedAt = DateTime.Now;
 
-                #region Catagory
-                var categoriesInDb = product.ProductCategories.Select(bc => bc.CategoryId).ToList();
-                var categoriesToRemove = categoriesInDb.Except(model.CategoryIds).ToList();
-                var categoriesToAdd = model.CategoryIds.Except(categoriesInDb).ToList();
+                #region Category
+                var DbCategory = product.ProductCategories!.Select(bc => bc.CategoryId).ToList();
+                var RemoveCategory = DbCategory.Except(model.CategoryIds).ToList();
+                var AddCategory = model.CategoryIds.Except(DbCategory).ToList();
 
-                product.ProductCategories.RemoveAll(bc => categoriesToRemove.Contains(bc.CategoryId));
+                product.ProductCategories!.RemoveAll(bc => RemoveCategory.Contains(bc.CategoryId));
 
-                foreach (var categoryId in categoriesToAdd)
+                foreach (var categoryId in AddCategory)
                 {
-                    var productCatagory = new ProductCategory
+                    var productCategory = new ProductCategory
                     {
                         CategoryId = categoryId,
                         Product = product,
                     };
 
-                    await _dataContext.ProductCatagories.AddAsync(productCatagory);
+                    await _dataContext.ProductCategories.AddAsync(productCategory);
                 }
                 #endregion
 
                 #region Color
-                var colorInDb = product.ProductColors.Select(bc => bc.ColorId).ToList();
-                var colorToRemove = colorInDb.Except(model.ColorIds).ToList();
-                var colorToAdd = model.ColorIds.Except(colorInDb).ToList();
 
-                product.ProductColors.RemoveAll(bc => colorToRemove.Contains(bc.ColorId));
+                var DbColor = product.ProductColors!.Select(bc => bc.ColorId).ToList();
+                var RemoveColor = DbColor.Except(model.ColorIds).ToList();
+                var AddColor = model.ColorIds.Except(DbColor).ToList();
+
+                product.ProductColors!.RemoveAll(bc => RemoveColor.Contains(bc.ColorId));
 
 
-                foreach (var colorId in colorToAdd)
+                foreach (var colorId in AddColor)
                 {
                     var productColor = new ProductColor
                     {
@@ -373,16 +390,15 @@ namespace Backend_Final.Areas.Admin.Controllers
                 }
                 #endregion
 
-
                 #region Size
-                var sizeInDb = product.ProductSizes.Select(bc => bc.SizeId).ToList();
-                var sizeToRemove = sizeInDb.Except(model.SizeIds).ToList();
-                var sizeToAdd = model.SizeIds.Except(sizeInDb).ToList();
+                var DbSize = product.ProductSizes.Select(bc => bc.SizeId).ToList();
+                var RemoveSize = DbSize.Except(model.SizeIds).ToList();
+                var AddSize = model.SizeIds.Except(DbSize).ToList();
 
-                product.ProductSizes.RemoveAll(bc => sizeToRemove.Contains(bc.SizeId));
+                product.ProductSizes.RemoveAll(bc => RemoveSize.Contains(bc.SizeId));
 
 
-                foreach (var sizeId in sizeToAdd)
+                foreach (var sizeId in AddSize)
                 {
                     var productSize = new ProductSize
                     {
@@ -396,14 +412,14 @@ namespace Backend_Final.Areas.Admin.Controllers
                 #endregion
 
                 #region Tag
-                var tagInDb = product.ProductTags.Select(bc => bc.TagId).ToList();
-                var tagToRemove = tagInDb.Except(model.TagIds).ToList();
-                var tagToAdd = model.TagIds.Except(tagInDb).ToList();
+                var DbTag = product.ProductTags.Select(bc => bc.TagId).ToList();
+                var RemoveTag = DbTag.Except(model.TagIds).ToList();
+                var AddTag = model.TagIds.Except(DbTag).ToList();
 
-                product.ProductTags.RemoveAll(bc => tagToRemove.Contains(bc.TagId));
+                product.ProductTags.RemoveAll(bc => RemoveTag.Contains(bc.TagId));
 
 
-                foreach (var tagId in tagToAdd)
+                foreach (var tagId in AddTag)
                 {
                     var productTag = new ProductTag
                     {
@@ -416,56 +432,29 @@ namespace Backend_Final.Areas.Admin.Controllers
                 #endregion
             }
 
+            #region GetView
 
             IActionResult GetView(AddViewModel model)
             {
-
-                model.Categories = _dataContext.Catagories
-                   .Select(c => new CategoryListViewModel(c.Id, c.Title))
-                   .ToList();
-
-                model.CategoryIds = product.ProductCategories.Select(c => c.CategoryId).ToList();
-
-
-                model.Sizes = _dataContext.Sizes
-                 .Select(c => new SizeListViewModel(c.Id, c.Name))
-                 .ToList();
-
-                model.SizeIds = product.ProductSizes.Select(c => c.SizeId).ToList();
-
-
-
+                model.Categories = _dataContext.Categories
+                    .Select(c => new CategoryListItemViewModel(c.Id, c.Title)).ToList();
                 model.Colors = _dataContext.Colors
-                 .Select(c => new ColorListViewModel(c.Id, c.Name))
-                 .ToList();
-
-                model.ColorIds = product.ProductColors.Select(c => c.ColorId).ToList();
-
-
-
+                    .Select(c => new ColorListItemViewModel(c.Id, c.Name)).ToList();
+                model.Sizes = _dataContext.Sizes
+                    .Select(c => new SizeListItemViewModel(c.Id, c.Name)).ToList();
                 model.Tags = _dataContext.Tags
-                 .Select(c => new TagListViewModel(c.Id, c.Name))
-                 .ToList();
+                    .Select(c => new TagListItemViewModel(c.Id, c.Name)).ToList();
 
+                model.SizeIds = product.ProductSizes!.Select(c => c.SizeId).ToList();
+                model.CategoryIds = product.ProductCategories!.Select(c => c.CategoryId).ToList();
+                model.ColorIds = product.ProductColors!.Select(c => c.ColorId).ToList();
                 model.TagIds = product.ProductTags.Select(c => c.TagId).ToList();
 
                 return View(model);
             }
-
+            #endregion
         }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
 
         //#endregion
 
