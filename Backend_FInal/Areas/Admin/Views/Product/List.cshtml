@@ -18,30 +18,22 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Price</th>
-                           
-
-
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var product in Model)
                         {
-
                             <tr>
                                 <td>@product.Name</td>
                                 <td>@product.Description</td>
                                 <td>@product.Price</td>
-                               
-
-
                                 <td class="text-end">
                                     <a asp-route="admin-product-update" asp-route-id="@product.Id"><i class="las la-pen text-secondary font-16"></i></a>
                                     <form class="d-none" method="POST" asp-route="admin-product-delete" asp-route-id="@product.Id" id="update-@product.Id">
                                     </form>
-
                                     <button type="submit" form="update-@product.Id"><i class="las la-trash-alt text-secondary font-16"></i></button>
-                                    <a class="btn btn-primary" asp-route="admin-productimage-list" asp-route-productId="@product.Id">Product Image List</a>
+                                    <a asp-route="admin-product-image-list" asp-route-ProductId="@product.Id">Add_Image</a>
                                 </td>
                             </tr>
                         }

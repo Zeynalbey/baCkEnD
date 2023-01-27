@@ -21,7 +21,8 @@
 <div class="col-lg-12">
     <div class="row justify-content-end">
         <div class="">
-            <a asp-route="admin-Product-image-add" asp-route-ProductId="@Model.ProductId"  target="_blank" class="btn btn-secondary">Add new Product image</a>
+            <a asp-route="admin-product-image-add" asp-route-ProductId="@Model.ProductId"  target="_blank" class="btn btn-secondary">Add new Product image</a>
+            <a asp-route="admin-product-list" class="btn btn-secondary">Return Product List</a>
         </div>
     </div>
 </div>
@@ -45,8 +46,7 @@
                                 <td><img src="~/@ProductImage.ImageUrL" width="20%" /></td>
                                 <td>@ProductImage.CreatedAt.ToString("dd/MM/yyyy")</td>
                                 <td class="text-end">
-                                    <a asp-route="admin-Product-image-update" asp-route-id="@ProductImage.Id"><i class="las la-pen text-secondary font-16"></i></a>
-                                    <form method="POST" asp-route="admin-Product-image-delete" asp-route-ProductId="@Model.ProductId" asp-route-ProductImageId="@ProductImage.Id" id="Product-image-form-@ProductImage.Id"></form>
+                                    <form method="POST" asp-route="admin-product-image-delete" asp-route-ProductId="@Model.ProductId" asp-route-ProductImageId="@ProductImage.Id" id="Product-image-form-@ProductImage.Id"></form>
                                     <button type="submit" form="Product-image-form-@ProductImage.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>
                                     </button>
