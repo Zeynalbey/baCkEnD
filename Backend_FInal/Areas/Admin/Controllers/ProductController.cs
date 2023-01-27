@@ -35,7 +35,6 @@ namespace Backend_Final.Areas.Admin.Controllers
             _fileService = fileService;
         }
 
-
         #region List
 
         [HttpGet("list", Name = "admin-product-list")]
@@ -456,27 +455,23 @@ namespace Backend_Final.Areas.Admin.Controllers
         }
         #endregion
 
-        //#endregion
+        #region Delete
 
-        //#region Delete
+        [HttpPost("delete/{id}", Name = "admin-product-delete")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        {
+            var product = await _dataContext.Products.FirstOrDefaultAsync(b => b.Id == id);
+            if (product is null)
+            {
+                return NotFound();
+            }
 
-        //[HttpPost("delete/{id}", Name = "admin-Product-delete")]
-        //public async Task<IActionResult> DeleteAsync([FromRoute] int id)
-        //{
-        //    var Product = await _dataContext.Products.FirstOrDefaultAsync(b => b.Id == id);
-        //    if (Product is null)
-        //    {
-        //        return NotFound();
-        //    }
+            _dataContext.Products.Remove(product);
+            await _dataContext.SaveChangesAsync();
 
-        //    //await _fileService.DeleteAsync(Product.ImageNameInFileSystem, UploadDirectory.Product);
+            return RedirectToRoute("admin-product-list");
+        }
 
-        //    _dataContext.Products.Remove(Product);
-        //    await _dataContext.SaveChangesAsync();
-
-        //    return RedirectToRoute("admin-Product-list");
-        //}
-
-        //#endregion
+        #endregion
     }
 }

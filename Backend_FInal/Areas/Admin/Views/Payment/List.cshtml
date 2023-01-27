@@ -34,7 +34,7 @@
                                 <td>@payment.Content</td>
                                 <td>@payment.IconImage</td>
                                 <td class="text-end d-flex mt-3">
-
+                                    <a asp-route="admin-payment-update" asp-route-id="@payment.Id"><i class="las la-pen text-secondary font-16"></i></a>
                                     <form method="POST" asp-route="admin-payment-delete" asp-route-id="@payment.Id" id="payment-form-@payment.Id"></form>
                                     <button class="border-0" type="submit" form="payment-form-@payment.Id">
                                         <i class="las la-trash-alt text-secondary font-16"></i>

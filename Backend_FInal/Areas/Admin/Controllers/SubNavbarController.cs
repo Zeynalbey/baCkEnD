@@ -12,22 +12,18 @@ namespace Backend_Final.Controllers.Admin
     [Authorize(Roles = "admin")]
     public class SubNavbarController : Controller
     {
-
         private readonly DataContext _dataContext;
-
 
         public SubNavbarController(DataContext dataContext)
         {
             _dataContext = dataContext;
-
         }
-
 
         [HttpGet("list", Name = "admin-subnavbar-list")]
         public async Task<IActionResult> List()
         {
             var model = await _dataContext.SubNavbars.Select(
-                sn => new ListSubViewModel(sn.Id,sn.Title,sn.Url, sn.Order,sn.Navbar.Title)
+                sn => new ListSubViewModel(sn.Id,sn.Title,sn.Url, sn.Order,sn.Navbar.Title!)
                 ).ToListAsync();
                
             return View(model);
@@ -38,7 +34,7 @@ namespace Backend_Final.Controllers.Admin
         {
             var model = new SubAddViewModel
             {
-                Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
+                Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title!)).ToList()
             };
             
             return View(model);
@@ -50,7 +46,7 @@ namespace Backend_Final.Controllers.Admin
             {
                 model = new SubAddViewModel
                 {
-                    Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
+                    Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title!)).ToList()
                 };
                 return View(model);
             }
@@ -76,24 +72,22 @@ namespace Backend_Final.Controllers.Admin
             {
                 return NotFound();
             }
-            var model = new SubAddViewModel
+            var model = new UpdateViewModel
             {
                 Title = subnavbar.Title,
                 Url=subnavbar.Url,
                 Order=subnavbar.Order,
                 NavbarId=subnavbar.NavbarId,
-                Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList()
+                Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title!)).ToList()
             };
             return View(model);
         }
         [HttpPost("update/{id}", Name = "admin-subnavbar-update")]
         public IActionResult Update(UpdateViewModel model)
         {
-
             if (!ModelState.IsValid)
             {
-
-                model.Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title)).ToList();
+                model.Navbar = _dataContext.Navbars.Select(n => new NavbarListItemViewModel(n.Id, n.Title!)).ToList();
                 return View(model);
             }
             var subnavbar = _dataContext.SubNavbars.Include(n=> n.Navbar).FirstOrDefault(n => n.Id == model.Id);
@@ -109,9 +103,7 @@ namespace Backend_Final.Controllers.Admin
 
             _dataContext.SaveChanges();
             return RedirectToRoute("admin-subnavbar-list");
-
         }
-
 
         [HttpPost("delete/{id}", Name = "admin-subnavbar-delete")]
         public  IActionResult Delete([FromRoute] int id)

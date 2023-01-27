@@ -66,8 +66,56 @@ namespace Backend_Final.Areas.Admin.Controllers
             await _dataContext.SaveChangesAsync();
 
             return RedirectToRoute("admin-payment-list");
-
         }
+
+        [HttpGet("update/{id}", Name = "admin-payment-update")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id)
+        {
+            var payment = await _dataContext.Payments.FirstOrDefaultAsync(n => n.Id == id);
+
+            if (payment is null)
+            {
+                return NotFound();
+            }
+
+            var model = new AddViewModel()
+            {
+                Id = payment.Id,
+                Title = payment.Title!,
+                Content = payment.Content!,
+                IconImageUrl = _fileService.GetFileUrl(payment.IconİmageInSystem, UploadDirectory.Payment)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost("update/{id}", Name = "admin-payment-update")]
+        public async Task<IActionResult> UpdateAsync(AddViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var payment = await _dataContext.Payments.FirstOrDefaultAsync(n => n.Id == model.Id);
+            if (payment is null)
+            {
+                return NotFound();
+            }
+
+            var imageNameInSystem = await _fileService.UploadAsync(model.Iconİmage!, UploadDirectory.Payment);
+
+            payment.Title = model.Title;
+            payment.Content = model.Content;
+            payment.IconImage = model.Iconİmage!.FileName;
+            payment.IconİmageInSystem = imageNameInSystem;
+
+ 
+            await _dataContext.SaveChangesAsync();
+
+            return RedirectToRoute("admin-payment-list");
+        }
+
 
         [HttpPost("delete/{id}", Name = "admin-payment-delete")]
         public async Task<IActionResult> Delete([FromRoute] int id)
