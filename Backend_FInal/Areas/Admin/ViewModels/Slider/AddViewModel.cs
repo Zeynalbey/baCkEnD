@@ -4,6 +4,7 @@ namespace Backend_Final.Areas.Admin.ViewModels.Slider
 {
     public class AddViewModel
     {
+        public int Id { get; set; }
         [Required]
         public string? MainTitle { get; set; }
         [Required]
@@ -16,5 +17,6 @@ namespace Backend_Final.Areas.Admin.ViewModels.Slider
         public string? ButtonRedirectUrl { get; set; }
         public int Order { get; set; }
         public IFormFile? İmage { get; set; }
+        public string? İmageUrl { get; set; }
     }
 }
