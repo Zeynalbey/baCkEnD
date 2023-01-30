@@ -4,7 +4,6 @@ using Backend_Final.Database.Models.Common;
 using Backend_Final.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using DemoApplication.Database.Models;
 
 namespace Backend_Final.Database
 {

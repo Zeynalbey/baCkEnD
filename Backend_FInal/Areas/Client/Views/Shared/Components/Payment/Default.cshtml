@@ -1,0 +1,18 @@
+﻿@using Backend_Final.Areas.Admin.ViewModels.Payment
+@model List<PaymentListViewModel>
+
+@foreach (var payment in Model)
+{
+    <div class="col-lg-4 col-md-6">
+        <div class="shipping-item">
+            <div class="shipping-img">
+                <img src="~/@payment.IconImage"
+                 alt="Shipping Icon" />
+            </div>
+            <div class="shipping-content">
+                <h2 class="title">@payment.Title</h2>
+                <p class="short-desc mb-0">@payment.Content</p>
+            </div>
+        </div>
+    </div>
+}

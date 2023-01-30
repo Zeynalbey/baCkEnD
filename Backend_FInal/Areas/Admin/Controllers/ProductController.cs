@@ -46,7 +46,6 @@ namespace Backend_Final.Areas.Admin.Controllers
                     p.Name,
                     p.Description!,
                     p.Price,
-                    p.Rate,
                     p.ProductCategories!.Select(pc => pc.Category).Select(c => new CategoryViewModel(c.Title)).ToList(),
                     p.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Name)).ToList(),
                     p.ProductSizes!.Select(ps => ps.Size).Select(s => new SizeViewModel(s.Name)).ToList(),

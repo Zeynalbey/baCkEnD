@@ -5,7 +5,7 @@ using Backend_Final.Contracts.File;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DemoApplication.Database.Models;
+using Backend_Final.Database.Models;
 
 namespace Backend_Final.Areas.Admin.Controllers
 {

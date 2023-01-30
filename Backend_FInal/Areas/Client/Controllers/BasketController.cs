@@ -39,7 +39,7 @@ namespace Backend_Final.Areas.Client.Controllers
             //    return ViewComponent(nameof(ShopCart), productsCookieViewModel);
             //}
 
-            return View/*Component(nameof(ShopCart))*/();
+            return ViewComponent(nameof(ShopCart));
         }
 
         [HttpGet("delete/{id}", Name = "client-basket-delete")]
@@ -62,7 +62,7 @@ namespace Backend_Final.Areas.Client.Controllers
 
             HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
 
-            return View/*Component(nameof(ShopCart))*/();
+            return ViewComponent(nameof(ShopCart));
         }
     }
 }

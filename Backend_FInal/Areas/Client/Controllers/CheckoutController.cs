@@ -47,8 +47,9 @@
 //                    .Where(bp => bp.Basket!.UserId == _userService.CurrentUser.Id)
 //                    .Select(bp => new OrdersProductsViewModel.ItemViewModel
 //                    {
-//                        Name = bp.Product!.Title,
+//                        Name = bp.Product!.Name,
 //                        Price = bp.Product.Price,
+//                        Rate = bp.Product.Rate,
 //                        Quantity = bp.Quantity,
 //                        Total = bp.Product.Price * bp.Quantity
 //                    }).ToListAsync(),
@@ -75,7 +76,7 @@
 
 //            await CreateAndFulfillOrderProductsAsync(order, basketProducts);
 
-//            order.Total = order.OrderProducts!.Sum(op => op.Total); 
+//            order.Total = order.OrderProducts!.Sum(op => op.Total);
 
 //            await ResetBasketAsync(basketProducts);
 
@@ -102,6 +103,7 @@
 //                        ProductId = basketProduct.ProductId,
 //                        Price = basketProduct.Product!.Price,
 //                        Quantity = basketProduct.Quantity,
+//                        Rate = basketProduct.Product.Rate++,
 //                        Total = basketProduct.Quantity * basketProduct.Product!.Price,
 //                    };
 

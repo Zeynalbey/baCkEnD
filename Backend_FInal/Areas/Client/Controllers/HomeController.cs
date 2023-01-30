@@ -1,5 +1,8 @@
 ﻿using Backend_Final.Areas.Admin.ViewModels.Payment;
+using Backend_Final.Areas.Admin.ViewModels.Product;
+using Backend_Final.Areas.Admin.ViewModels.Product.Add;
 using Backend_Final.Areas.Admin.ViewModels.Slider;
+using Backend_Final.Areas.Client.ViewComponents;
 using Backend_Final.Areas.Client.ViewModels.Home.Contact;
 using Backend_Final.Areas.Client.ViewModels.Home.Index;
 using Backend_Final.Contracts.File;
@@ -17,7 +20,6 @@ namespace Backend_Final.Areas.Client.Controllers
 {
     [Area("client")]
     [Route("home")]
-    [ApiController]
     public class HomeController : Controller
     {
         private readonly DataContext _dbContext;
@@ -34,53 +36,37 @@ namespace Backend_Final.Areas.Client.Controllers
         [HttpGet("index")]
         public async Task<IActionResult> IndexAsync([FromServices] IFileService fileService)
         {
-            var model = new IndexViewModel
+            return View();
+        }
+        // p.ProductImages.Take(1).FirstOrDefault()
+
+        [HttpGet("quick/{id}", Name = "quick-view")]
+        public async Task<ActionResult> ModalAsync(int id)
+        {
+
+            var product = await _dbContext.Products.Include(p => p.ProductImages)
+                .Include(p => p.ProductColors)
+                .Include(p => p.ProductSizes).FirstOrDefaultAsync(p => p.Id == id);
+
+
+            if (product is null)
             {
+                return NotFound();
+            }
 
-                Sliders = await _dbContext.Sliders.Select(s => new ListViewModel(
-                    s.Id,
-                    s.MainTitle!,
-                    s.Content!,
-                    s.SecondTitle!,
-                    s.Button!,
-                    s.ButtonRedirectUrl!,
-                    s.Order,
-                    _fileService.GetFileUrl(s.İmageInSystem, UploadDirectory.Slider),
-                    s.CreatedAt)).ToListAsync(),
+            var model = new IndexViewModel(product.Id, product.Name, product.Description, product.Price,
+                product.ProductImages!.Take(1).FirstOrDefault() != null
+                ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
+            : String.Empty,
+                _dbContext.ProductColors.Include(pc => pc.Color).Where(pc => pc.ProductId == product.Id)
+                .Select(pc => new IndexViewModel.ColorViewModeL(pc.Color.Name, pc.Color.Id)).ToList(),
+                _dbContext.ProductSizes.Include(ps => ps.Size).Where(ps => ps.ProductId == product.Id)
+                .Select(ps => new IndexViewModel.SizeViewModeL(ps.Size.Name, ps.Size.Id)).ToList()
+                );
 
-                Payments = await _dbContext.Payments.Select(p => new PaymentListViewModel(
-                    p.Id, p.Title!, p.Content!, _fileService.GetFileUrl(p.IconİmageInSystem, UploadDirectory.Payment))).ToListAsync()
-
-            };
-
-
-
-            return View(model);
+            return PartialView("~/Areas/Client/Views/Shared/Partials/_ModalPartial.cshtml", model);
         }
 
-        //[HttpGet("contact")]
-        //public ActionResult Contact()
-        //{
-        //    return View();
-        //}
 
-        //[HttpPost("contact")]
-        //public ActionResult Contact([FromForm] CreateViewModel contactViewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-
-        //    _dbContext.Contacts.Add(new Contact
-        //    {
-        //        Name = contactViewModel.Name,
-        //        Email = contactViewModel.Email,
-        //        Message = contactViewModel.Message,
-        //        Phone = contactViewModel.PhoneNumber,
-        //    });
-
-        //    return RedirectToAction(nameof(Index));
-        //}
     }
 }

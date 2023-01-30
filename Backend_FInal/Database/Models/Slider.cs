@@ -1,6 +1,6 @@
 ﻿using Backend_Final.Database.Models.Common;
 
-namespace DemoApplication.Database.Models
+namespace Backend_Final.Database.Models
 {
     public class Slider : BaseEntity<int>, IAuditable
     {

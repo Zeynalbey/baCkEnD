@@ -7,7 +7,7 @@ namespace Backend_Final.Areas.Admin.ViewModels.Product
     public class ListItemViewModel
     {
         public ListItemViewModel(int id, string? name, string description, 
-            decimal price, int rate, List<CategoryViewModel> categories, 
+            decimal price, List<CategoryViewModel> categories, 
             List<TagViewModel> tags, List<SizeViewModel> sizes, 
             List<ColorViewModel> colors)
         {
@@ -15,7 +15,6 @@ namespace Backend_Final.Areas.Admin.ViewModels.Product
             Name = name;
             Description = description;
             Price = price;
-            Rate = rate;
             Categories = categories;
             Tags = tags;
             Sizes = sizes;
@@ -26,7 +25,6 @@ namespace Backend_Final.Areas.Admin.ViewModels.Product
         public string? Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public int Rate { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<TagViewModel> Tags { get; set; }
         public List<SizeViewModel> Sizes { get; set; }
