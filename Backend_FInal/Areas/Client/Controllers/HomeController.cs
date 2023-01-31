@@ -40,7 +40,7 @@ namespace Backend_Final.Areas.Client.Controllers
         }
         // p.ProductImages.Take(1).FirstOrDefault()
 
-        [HttpGet("quick/{id}", Name = "quick-view")]
+        [HttpGet("modal/{id}", Name = "plant-modal")]
         public async Task<ActionResult> ModalAsync(int id)
         {
 

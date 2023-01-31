@@ -14,5 +14,8 @@ namespace Backend_Final.Database.Models
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public int SizeId { get; set; }
+        public int ColorId { get; set; }
     }
 }

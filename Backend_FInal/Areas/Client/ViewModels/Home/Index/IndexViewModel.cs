@@ -12,9 +12,6 @@ namespace Backend_Final.Areas.Client.ViewModels.Home.Index
 
         public List<Admin.ViewModels.Product.ListItemViewModel> Products { get; set; }
 
-
-
-
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

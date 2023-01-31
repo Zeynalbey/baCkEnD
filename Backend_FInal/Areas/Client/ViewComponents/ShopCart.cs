@@ -1,7 +1,9 @@
 ﻿using Backend_Final.Areas.Client.ViewModels.Basket;
+using Backend_Final.Contracts.File;
 using Backend_Final.Database;
 using Backend_Final.Extensions;
 using Backend_Final.Services.Abstracts;
+using Backend_Final.Services.Concretes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -13,11 +15,13 @@ namespace Backend_Final.Areas.Client.ViewComponents
     {
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
+        private readonly IFileService _fileService;
 
-        public ShopCart(DataContext dataContext, IUserService userService)
+        public ShopCart(DataContext dataContext, IUserService userService, IFileService fileService)
         {
             _dataContext = dataContext;
             _userService = userService;
+            _fileService = fileService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(List<ProductCookieViewModel>? viewModels = null)
@@ -31,10 +35,16 @@ namespace Backend_Final.Areas.Client.ViewComponents
                         new ProductCookieViewModel(
                             bp.ProductId,
                             bp.Product!.Name,
-                            string.Empty,
+                    bp.Product.ProductImages!.Take(1).FirstOrDefault() != null
+                   ? _fileService.GetFileUrl(bp.Product.ProductImages!.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
+                   : String.Empty,
                             bp.Quantity,
                             bp.Product.Price,
-                            bp.Product.Price * bp.Quantity))
+                            bp.Product.Price * bp.Quantity,
+                            bp.SizeId,
+                            bp.ColorId
+                           ))
+
                     .ToListAsync();
 
                 return View(model);

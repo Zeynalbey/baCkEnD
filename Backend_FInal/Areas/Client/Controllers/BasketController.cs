@@ -24,20 +24,27 @@ namespace Backend_Final.Areas.Client.Controllers
             _basketService = basketService;
         }
 
-        [HttpGet("add/{id}", Name = "client-basket-add")]
-        public async Task<IActionResult> AddProductAsync([FromRoute] int id)
+        [HttpPost("add", Name = "client-basket-add")]
+        public async Task<IActionResult> AddProductAsync(ProductCookieViewModel model)
         {
-            var product = await _dataContext.Products.FirstOrDefaultAsync(b => b.Id == id);
+            var product = await _dataContext.Products.Include(p => p.ProductSizes)
+                .Include(p => p.ProductColors)
+                .Include(p => p.ProductImages).FirstOrDefaultAsync(b => b.Id == model.Id);
             if (product is null)
             {
                 return NotFound();
             }
-
-            //var productsCookieViewModel = await _basketService.AddBasketProductAsync(product);
-            //if (productsCookieViewModel.Any())
-            //{
-            //    return ViewComponent(nameof(ShopCart), productsCookieViewModel);
-            //}
+            model.SizeId = model.SizeId;
+            model.ColorId = model.ColorId;
+            if (model.Quantity == 0)
+            {
+                model.Quantity = 1;
+            }
+            var productsCookieViewModel = await _basketService.AddBasketProductAsync(product, model);
+            if (productsCookieViewModel.Any())
+            {
+                return ViewComponent(nameof(ShopCart), productsCookieViewModel);
+            }
 
             return ViewComponent(nameof(ShopCart));
         }

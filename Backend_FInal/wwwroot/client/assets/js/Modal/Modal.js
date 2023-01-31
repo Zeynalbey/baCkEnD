@@ -2,7 +2,7 @@
     e.preventDefault();
 
     var url = e.target.parentElement.href;
-    console.log(url)
+    console.log("url: ", url)
 
     fetch(url)
         .then(response => response.text())
@@ -13,3 +13,6 @@
 
     $("#quickModal").modal("show");
 })
+
+
+

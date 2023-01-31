@@ -30,18 +30,18 @@
                         <li class="quuickview-btn "
                         data-bs-toggle="modal"
                         data-bs-target="#quickModal">
-                            <a class="show-plant-modal bg-light" asp-route="quick-view" asp-route-id="@product.Id" data-toggle="modal" data-target="#quickModal"
+                            <a class="show-plant-modal bg-light" asp-route="plant-modal" asp-route-id="@product.Id" data-toggle="modal" data-target="#quickModal"
                            data-tippy="Quickview"
                            data-tippy-inertia="true"
                            data-tippy-animation="shift-away"
                            data-tippy-delay="50"
                            data-tippy-arrow="true"
                            data-tippy-theme="sharpborder">
-                                <i class="pe-7s-look"></i>
+                                <i class="pe-7s-look"></i> 
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html"
+                            <a asp-route="client-basket-add"
                            data-tippy="Add to cart"
                            data-tippy-inertia="true"
                            data-tippy-animation="shift-away"
@@ -53,6 +53,8 @@
                         </li>
                     </ul>
                 </div>
+            
+            
             </div>
             <div class="product-content">
                 <a class="product-name" href="shop.html">@product.Name</a>
