@@ -1,4 +1,5 @@
 ﻿using Backend_Final.Areas.Admin.ViewModels.Category;
+using Backend_Final.Areas.Admin.ViewModels.Color;
 using Backend_Final.Areas.Admin.ViewModels.Product;
 using Backend_Final.Areas.Admin.ViewModels.Product.Add;
 using Backend_Final.Areas.Admin.ViewModels.Size;
@@ -46,10 +47,10 @@ namespace Backend_Final.Areas.Admin.Controllers
                     p.Name,
                     p.Description!,
                     p.Price,
-                    p.ProductCategories!.Select(pc => pc.Category).Select(c => new CategoryViewModel(c.Title)).ToList(),
-                    p.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Name)).ToList(),
+                    p.ProductCategories!.Select(pc => pc.Category).Select(c => new CategoryViewModel(c.Id,c.Title)).ToList(),
+                    p.ProductTags!.Select(pt => pt.Tag).Select(t => new TagViewModel(t.Id,t.Name)).ToList(),
                     p.ProductSizes!.Select(ps => ps.Size).Select(s => new SizeViewModel(s.Name)).ToList(),
-                    p.ProductColors!.Select(pco => pco.Color).Select(co => new ColorViewModel(co.Name!)).ToList()))
+                    p.ProductColors!.Select(pco => pco.Color).Select(co => new ColorViewModel(co.Id,co.Name!)).ToList()))
                 .ToListAsync();
             return View(model);
         }

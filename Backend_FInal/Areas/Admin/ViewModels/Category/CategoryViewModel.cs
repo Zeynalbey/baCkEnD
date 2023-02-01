@@ -2,11 +2,13 @@
 {
     public class CategoryViewModel
     {
-        public CategoryViewModel(string title)
+        public CategoryViewModel(int id, string title)
         {
-            Title = title;
+            Id = id;
+            Title = title;      
         }
 
+        public int Id { get; set; }
         public string Title { get; set; }
     }
 }

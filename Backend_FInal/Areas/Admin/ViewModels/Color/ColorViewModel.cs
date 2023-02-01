@@ -1,12 +1,14 @@
-﻿namespace Backend_Final.Areas.Admin.ViewModels.Category
+﻿namespace Backend_Final.Areas.Admin.ViewModels.Color
 {
     public class ColorViewModel
     {
-        public ColorViewModel(string title)
+        public ColorViewModel(int id, string title)
         {
-            Title = title;
+            Id = id;
+            Title = title;            
         }
 
+        public int Id { get; set; }
         public string Title { get; set; }
     }
 }

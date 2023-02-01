@@ -1,0 +1,12 @@
+﻿@using Backend_Final.Areas.Admin.ViewModels.Tag
+@model List<TagViewModel>
+<ul class="widgets-tag">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="#">@item.Title</a>
+        </li>
+        
+    }
+    
+</ul>

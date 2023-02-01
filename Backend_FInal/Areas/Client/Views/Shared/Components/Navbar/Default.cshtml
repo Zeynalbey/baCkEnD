@@ -5,7 +5,12 @@
 
 @foreach (var navbar in Model)
 {
-
+    <li>
+        <a asp-route="client-home-index">Home Page</a>
+    </li>
+    <li>
+        <a asp-route="client-shop-index">Shop List</a>
+    </li>
     <li class="menu-item has-children">
         <a  href="">
             @if (navbar.IsBold)

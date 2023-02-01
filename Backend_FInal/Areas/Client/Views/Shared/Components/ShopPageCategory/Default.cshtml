@@ -1,0 +1,22 @@
+﻿@using Backend_Final.Areas.Admin.ViewModels.Category
+@model List<CategoryViewModel>
+
+<ul class="widgets-category">
+    <li>
+        <a asp-route="client-shop-index">
+            <i class="fa fa-chevron-right"></i>
+            All <span>@Model.Count</span>
+        </a>
+    </li>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a asp-route="client-shop-index" asp-route-categoryId="@item.Id">
+                <i class="fa fa-chevron-right"></i>
+                @item.Title
+            </a>
+        </li>
+    }
+
+
+</ul>

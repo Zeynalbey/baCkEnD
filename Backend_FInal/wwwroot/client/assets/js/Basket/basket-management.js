@@ -1,7 +1,7 @@
 ﻿let baskets = []
 
 const BASKET_PRODUCTS_KEY = "products";
-let cardBlock = $(".cart-block")
+let cardBlock = $(".swiper-wrapper")
 
 
 // #region Initial setups
