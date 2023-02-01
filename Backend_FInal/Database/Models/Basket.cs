@@ -11,5 +11,6 @@ namespace Backend_Final.Database.Models
         public DateTime UpdatedAt { get; set; }
 
         public List<BasketProduct>? BasketProducts { get; set; }
+
     }
 }

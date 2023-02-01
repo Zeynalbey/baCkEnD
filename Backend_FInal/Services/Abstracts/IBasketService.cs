@@ -6,6 +6,6 @@ namespace Backend_Final.Services.Abstracts
 {
     public interface IBasketService
     {
-        Task<List<ProductCookieViewModel>> AddBasketProductAsync(Product Product, ProductCookieViewModel model);
+        Task<List<ProductCookieViewModel>> AddBasketProductAsync(Product Product);
     }
 }

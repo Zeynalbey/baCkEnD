@@ -40,9 +40,7 @@ namespace Backend_Final.Areas.Client.ViewComponents
                    : String.Empty,
                             bp.Quantity,
                             bp.Product.Price,
-                            bp.Product.Price * bp.Quantity,
-                            bp.SizeId,
-                            bp.ColorId
+                            bp.Product.Price * bp.Quantity
                            ))
 
                     .ToListAsync();

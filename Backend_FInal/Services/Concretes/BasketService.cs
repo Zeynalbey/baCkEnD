@@ -29,7 +29,7 @@ namespace Backend_Final.Services.Concretes
             _httpContextAccessor = httpContextAccessor;
             _fileService = fileService;
         }
-        public async Task<List<ProductCookieViewModel>> AddBasketProductAsync(Product product, ProductCookieViewModel model)
+        public async Task<List<ProductCookieViewModel>> AddBasketProductAsync(Product product)
         {
             if (_userService.IsAuthenticated)
             {
@@ -55,11 +55,9 @@ namespace Backend_Final.Services.Concretes
 
                     basketProduct = new BasketProduct
                     {
-                        Quantity = model.Quantity,
+                        Quantity = 1,
                         BasketId = basket.Id,
                         ProductId = product.Id,
-                        SizeId = model.SizeId,
-                        ColorId = model.ColorId
                     };
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);
@@ -67,6 +65,7 @@ namespace Backend_Final.Services.Concretes
 
                 await _dataContext.SaveChangesAsync();
             }
+
 
             //Add product to cookie if user is not authenticated 
             List<ProductCookieViewModel> AddToCookie()
@@ -76,19 +75,15 @@ namespace Backend_Final.Services.Concretes
                     ? JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue)
                     : new List<ProductCookieViewModel> { };
 
-                var productCookieViewModel = productsCookieViewModel!.FirstOrDefault(pcvm => pcvm.Id == product.Id
-                && pcvm.SizeId == model.SizeId && pcvm.ColorId == model.ColorId);
+                var productCookieViewModel = productsCookieViewModel!.FirstOrDefault(pcvm => pcvm.Id == product.Id);
                 if (productCookieViewModel is null)
                 {
                     productsCookieViewModel
-                        !.Add(new ProductCookieViewModel(product.Id, product.Name,
-                         product.ProductImages.Take(1).FirstOrDefault() != null
-                   ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault()!.ImageNameInFileSystem, UploadDirectory.Product)
-                   : String.Empty, model.Quantity, product.Price, product.Price, model.ColorId, model.SizeId));
+                        !.Add(new ProductCookieViewModel(product.Id, product.Name, string.Empty, 1, product.Price, product.Price));
                 }
                 else
                 {
-                    productCookieViewModel.Quantity += model.Quantity;
+                    productCookieViewModel.Quantity += 1;
                     productCookieViewModel.Total = productCookieViewModel.Quantity * productCookieViewModel.Price;
                 }
 

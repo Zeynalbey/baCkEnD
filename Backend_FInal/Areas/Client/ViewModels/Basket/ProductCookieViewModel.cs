@@ -3,7 +3,7 @@
     public class ProductCookieViewModel
     {
         public ProductCookieViewModel(int id, string? title, string? imageUrl, int quantity, 
-            decimal price, decimal total, int colorId, int sizeId)
+            decimal price, decimal total)
         {
             Id = id;
             Title = title;
@@ -11,8 +11,6 @@
             Quantity = quantity;
             Price = price;
             Total = total;
-            ColorId = colorId;
-            SizeId = sizeId;
         }
 
         public int Id { get; set; }
@@ -21,8 +19,6 @@
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public decimal Total { get; set; }
-        public int ColorId { get; set; }
-        public int SizeId { get; set; }
 
     }
 }
