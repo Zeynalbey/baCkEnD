@@ -1,12 +1,14 @@
 ﻿@using Backend_Final.Areas.Admin.ViewModels.Tag
 @model List<TagViewModel>
+
+<h2 class="widgets-title mb-4">Populer Tags</h2>
 <ul class="widgets-tag">
     @foreach (var item in Model)
     {
         <li>
-            <a href="#">@item.Title</a>
+            <input type="hidden" value="@item.Id" />
+            <a class="select-tag" asp-route="client-shoppage-filter">@item.Title</a>
         </li>
-        
     }
-    
 </ul>
+

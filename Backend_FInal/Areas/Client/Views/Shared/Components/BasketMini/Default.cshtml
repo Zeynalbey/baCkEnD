@@ -1,0 +1,54 @@
+﻿@using Backend_Final.Areas.Client.ViewModels.Basket;
+@model List<ProductCookieViewModel>
+
+
+<div class="minicart-content">
+    <div class="minicart-heading">
+        <h4 class="mb-0">Shopping Cart</h4>
+        <a href="#" class="button-close">
+            <i class="pe-7s-close"
+               data-tippy="Close"
+               data-tippy-inertia="true"
+               data-tippy-animation="shift-away"
+               data-tippy-delay="50"
+               data-tippy-arrow="true"
+               data-tippy-theme="sharpborder"></i>
+        </a>
+    </div>
+    <ul class="minicart-list">
+        @foreach (var product in Model)
+        {
+          <li class="minicart-product">
+                <a asp-route="client-basket-delete" asp-route-Id="@product.Id" data-id="@product.Id" class="product-item_remove  remove-basket-btn">
+                <i class="pe-7s-close"
+                   data-tippy="Remove"
+                   data-tippy-inertia="true"
+                   data-tippy-animation="shift-away"
+                   data-tippy-delay="50"
+                   data-tippy-arrow="true"
+                   data-tippy-theme="sharpborder"></i>
+            </a>
+            <a href="single-product-variable.html"
+               class="product-item_img">
+                <img class="img-full"
+                     src="~/@product.ImageUrl"
+                     alt="Product Image" />
+            </a>
+            <div class="product-item_content">
+                <a class="product-item_title"
+                   href="single-product-variable.html">@product.Title</a>
+                <span class="product-item_quantity">@product.Quantity x $@product.Price</span>
+            </div>
+        </li>    
+        }
+
+    </ul>
+</div>
+<div class="minicart-item_total">
+    <span>Subtotal</span>
+    <span class="ammount">$@Model!.Sum(pcvm => pcvm.Total)</span>
+</div>
+<div class="group-btn_wrap d-grid gap-2">
+    <a asp-route="client-card-page-index" class="btn btn-dark">View Cart</a>
+    <a asp-route="client-order-checkout" class="btn btn-dark">Checkout</a>
+</div>

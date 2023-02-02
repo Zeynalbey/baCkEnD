@@ -31,6 +31,7 @@ namespace Backend_Final.Services.Concretes
         }
         public async Task<List<ProductCookieViewModel>> AddBasketProductAsync(Product product)
         {
+
             if (_userService.IsAuthenticated)
             {
                 await AddToDatabaseAsync();
@@ -70,6 +71,8 @@ namespace Backend_Final.Services.Concretes
             //Add product to cookie if user is not authenticated 
             List<ProductCookieViewModel> AddToCookie()
             {
+
+             
                 var productCookieValue = _httpContextAccessor.HttpContext.Request.Cookies["products"];
                 var productsCookieViewModel = productCookieValue is not null
                     ? JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue)
@@ -79,7 +82,9 @@ namespace Backend_Final.Services.Concretes
                 if (productCookieViewModel is null)
                 {
                     productsCookieViewModel
-                        !.Add(new ProductCookieViewModel(product.Id, product.Name, string.Empty, 1, product.Price, product.Price));
+                        !.Add(new ProductCookieViewModel(product.Id, product.Name, 
+                        product.ProductImages.Take(1)
+                        .FirstOrDefault() != null ? _fileService.GetFileUrl(product.ProductImages.Take(1).FirstOrDefault().ImageNameInFileSystem, UploadDirectory.Product) : String.Empty, 1, product.Price, product.Price));
                 }
                 else
                 {

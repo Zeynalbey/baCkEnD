@@ -4,6 +4,7 @@ using Backend_Final.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackendFinal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230202063149_FeedBack")]
+    partial class FeedBack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,43 +164,6 @@ namespace BackendFinal.Migrations
                             Id = 3,
                             Name = "Yellow"
                         });
-                });
-
-            modelBuilder.Entity("Backend_Final.Database.Models.Feedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageNameInFileSystem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Feedbacks");
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Navbar", b =>
@@ -767,17 +733,6 @@ namespace BackendFinal.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Backend_Final.Database.Models.Feedback", b =>
-                {
-                    b.HasOne("Backend_Final.Database.Models.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Backend_Final.Database.Models.Order", b =>
                 {
                     b.HasOne("Backend_Final.Database.Models.User", "User")
@@ -980,8 +935,6 @@ namespace BackendFinal.Migrations
             modelBuilder.Entity("Backend_Final.Database.Models.User", b =>
                 {
                     b.Navigation("Basket");
-
-                    b.Navigation("Feedbacks");
 
                     b.Navigation("Orders");
 

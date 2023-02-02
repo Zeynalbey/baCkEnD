@@ -14,7 +14,7 @@ namespace Backend_Final.Database
         {
 
         }
-
+        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }

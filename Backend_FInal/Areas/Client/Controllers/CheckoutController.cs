@@ -49,7 +49,6 @@ namespace Backend_Final.Areas.Client.Controllers
                     {
                         Name = bp.Product!.Name,
                         Price = bp.Product.Price,
-                        Rate = bp.Product.Rate,
                         Quantity = bp.Quantity,
                         Total = bp.Product.Price * bp.Quantity
                     }).ToListAsync(),

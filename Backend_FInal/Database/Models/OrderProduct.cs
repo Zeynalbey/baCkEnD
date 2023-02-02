@@ -8,7 +8,6 @@ namespace Backend_Final.Database.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public decimal Total { get; set; }
-        //public int Rate { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
 

@@ -1,0 +1,200 @@
+﻿@using Backend_Final.Areas.Client.ViewComponents
+
+<div class="salam">
+    <div class="breadcrumb-area breadcrumb-height"
+         data-bg-image="assets/images/breadcrumb/bg/1-1-1919x388.jpg">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h2 class="breadcrumb-heading">Shop</h2>
+                        <ul>
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>Shop Default</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shop-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 order-2 order-lg-1 pt-5 pt-lg-0">
+                    <div class="sidebar-area">
+                        <div class="widgets-searchbox">
+                            <form id="widgets-searchbox">
+                                <span>Search By Name or Price</span>
+                                @using (Html.BeginForm("Filter", "ShopPage", FormMethod.Get))
+                                {
+                                    <div class="d-none">
+                                        <b>Search By :</b>
+                                        @Html.RadioButton("searchBy","Name",true) <text>Name</text>
+                                        <br />
+                                    </div>
+
+
+                                    @Html.TextBox("search", null, new { @class="search-box-product"})
+                                    <button class="search-btn-product" type="submit" aria-label="searchbtn"><i class="pe-7s-search"></i></button>
+                                }
+
+
+                            </form>
+                        </div>
+                        <div class="widgets-area">
+                            <!--SortByCatagory-->
+                            <div class="widgets-item pt-0 shop-category">
+                                @await Component.InvokeAsync(nameof(ShopPageCategory))
+                            </div>
+                            <div class="widgets-item">
+                                <!--SortByColor-->
+                                @await Component.InvokeAsync(nameof(ShopPageColor))
+                            </div>
+                            <div class="widgets-item widgets-filter">
+                                <h2 class="widgets-title mb-4">Price Filter</h2>
+                                <div class="price-filter">
+
+                                    <input type="text"
+                                           class="pronia-range-slider searchproductPrice"
+                                           name="pronia-range-slider"
+                                           value=""
+                                           data-type="double"
+                                           data-min="1"
+                                           data-from="1"
+                                           data-to="400"
+                                           data-max="400"
+                                           data-grid="false" />
+                                </div>
+                                <a class="shoppage-url" asp-route="client-shoppage-filter">
+                                </a>
+                            </div>
+                            <div class="widgets-item">
+                                <!--SortByTags-->
+                                @await Component.InvokeAsync(nameof(ShopPageTag))
+                            </div>
+                        </div>
+
+                        <div class="banner-item widgets-banner img-hover-effect">
+                            <div class="banner-img">
+                                <img src="assets/images/website-images/1-270x300.webp"
+                                     alt="Banner Image" />
+                            </div>
+                            <div class="banner-content text-position-center">
+                                <span class="collection">New Collection</span>
+                                <h3 class="title">Plant Port</h3>
+                                <div class="button-wrap">
+                                    <a class="btn btn-custom-size sm-size btn-pronia-primary"
+                                       href="#">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-8 order-1 order-lg-2">
+                    <div class="product-topbar">
+                        <ul>
+                            <li class="page-count">
+                                <span>12</span> Product Found of <span>30</span>
+                            </li>
+                            <li class="product-view-wrap">
+                                <ul class="nav" role="tablist">
+                                    <li class="grid-view" role="presentation">
+                                        <a class="active"
+                                           id="grid-view-tab"
+                                           data-bs-toggle="tab"
+                                           href="#grid-view"
+                                           role="tab"
+                                           aria-selected="true">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-view" role="presentation">
+                                        <a id="list-view-tab"
+                                           data-bs-toggle="tab"
+                                           href="#list-view"
+                                           role="tab"
+                                           aria-selected="true">
+                                            <i class="fa fa-th-list"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="short">
+                                <div class="btn-group dropright">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Filter
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <ul class="p-3">
+
+                                            <a asp-route="client-shoppage-index" asp-route-sort="1">
+                                                Sort by Default
+                                            </a>
+
+                                            <a asp-route="client-shoppage-index" asp-route-sort="2">
+                                                Sort by Latest
+                                            </a>
+
+                                            <a asp-route="client-shoppage-index" asp-route-sort="3">
+                                                Sort by Low Price
+                                            </a>
+
+                                            <a asp-route="client-shoppage-index" asp-route-sort="4">
+                                                Sort by High Price
+                                            </a>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active"
+                             id="grid-view"
+                             role="tabpanel"
+                             aria-labelledby="grid-view-tab">
+                            <div class="shoppage-product viewcompadd product-grid-view row g-y-20 filtered-area">
+                                @await Component.InvokeAsync(nameof(ShopPageProduct), new { searchBy = ViewBag.SearchBy, search = ViewBag.Search })
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade"
+                             id="list-view"
+                             role="tabpanel"
+                             aria-labelledby="list-view-tab">
+                            <div class="product-list-view row g-y-30">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination-area">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">&raquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*@section script{
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    }*@
+</div>

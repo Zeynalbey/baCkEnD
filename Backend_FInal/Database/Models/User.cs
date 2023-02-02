@@ -1,4 +1,5 @@
-﻿using Backend_Final.Database.Models.Common;
+﻿using Backend_Final.Areas.Client.ViewComponents;
+using Backend_Final.Database.Models.Common;
 
 namespace Backend_Final.Database.Models
 {
@@ -21,6 +22,7 @@ namespace Backend_Final.Database.Models
         public UserActivation? UserActivation { get; set; }
 
         public List<Order>? Orders { get; set; }
+        public List<Feedback> Feedbacks { get; set; }
 
     }
 }

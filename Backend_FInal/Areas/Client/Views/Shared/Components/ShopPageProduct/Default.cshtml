@@ -1,0 +1,64 @@
+﻿@using Backend_Final.Areas.Client.ViewModels.ShopPage;
+@model List<ListItemViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-4 col-sm-6">
+        <div class="product-item">
+            <div class="product-img">
+                <a href="single-product-variable.html">
+                    <img class="primary-img"
+                     src="~/@item.MainImgUrl"
+                     alt="Product Images" />
+                    <img class="secondary-img"
+                     src="~/@item.HoverImgUrl"
+                     alt="Product Images" />
+                </a>
+                <div class="product-add-action">
+                    <ul>
+                        <li class="quuickview-btn">
+                            <a class="show-product-modal" asp-route="Product-GetProduct" asp-route-id="@item.Id" data-toggle="modal" data-target="#quickModal"
+                           data-tippy="Quickview"
+                           data-tippy-inertia="true"
+                           data-tippy-animation="shift-away"
+                           data-tippy-delay="50"
+                           data-tippy-arrow="true"
+                           data-tippy-theme="sharpborder">
+                                <i class="pe-7s-look"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="add-basket-btn" asp-route="client-basket-add"
+                           asp-route-id="@item.Id"
+                           data-id="@item.Id"
+                           data-tippy="Add to cart"
+                           data-tippy-inertia="true"
+                           data-tippy-animation="shift-away"
+                           data-tippy-delay="50"
+                           data-tippy-arrow="true"
+                           data-tippy-theme="sharpborder">
+                                <i class="pe-7s-cart"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="product-content">
+                <a class="product-name"
+               href="single-product-variable.html">@item.Name</a>
+                <div class="price-box pb-1">
+                    <span class="new-price">$@item.Price</span>
+                </div>
+                <div class="rating-box">
+                    <ul>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
