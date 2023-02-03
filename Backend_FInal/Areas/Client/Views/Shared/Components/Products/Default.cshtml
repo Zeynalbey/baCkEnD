@@ -16,17 +16,6 @@
                 </a>
                 <div class="product-add-action">
                     <ul>
-                        <li>
-                            <a href="wishlist.html"
-                           data-tippy="Add to wishlist"
-                           data-tippy-inertia="true"
-                           data-tippy-animation="shift-away"
-                           data-tippy-delay="50"
-                           data-tippy-arrow="true"
-                           data-tippy-theme="sharpborder">
-                                <i class="pe-7s-like"></i>
-                            </a>
-                        </li>
                         <li class="quuickview-btn "
                         data-bs-toggle="modal"
                         data-bs-target="#quickModal">
@@ -41,14 +30,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html"
+                            <a asp-route="client-basket-add"
+                           asp-route-id="@product.Id"
+                           data-id="@product.Id"
+                           class="add-product-to-basket-btn add-basket-btn"
                            data-tippy="Add to cart"
                            data-tippy-inertia="true"
                            data-tippy-animation="shift-away"
                            data-tippy-delay="50"
                            data-tippy-arrow="true"
                            data-tippy-theme="sharpborder">
-                                <i class="pe-7s-cart"></i>
+                                <i class="pe-7s-look"></i>
                             </a>
                         </li>
                     </ul>
