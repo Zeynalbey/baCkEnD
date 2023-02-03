@@ -1,0 +1,70 @@
+﻿@using Backend_Final.Areas.Client.ViewModels.Blog
+@model List<BlogListViewModel>
+
+<div class="blog-area section-space-bottom-100">
+    <div class="container">
+        <div class="section-title-wrap">
+            <h2 class="section-title mb-7">Latest Blog</h2>
+            <p class="section-desc">
+                Contrary to popular belief, Lorem Ipsum is not simply random text.
+                It has roots in a piece of classical Latin literature
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="swiper-container blog-slider">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in Model)
+                        {
+                            <div class="swiper-slide">
+                                <div class="blog-item">
+                                    <div class="blog-content">
+                                        <div class="blog-meta">
+                                            <ul>
+                                                <li class="author">
+                                                    <a asp-route="client-blog-index">By: Admin</a>
+                                                </li>
+                                                <li class="date">@item.CreatedAt</li>
+                                            </ul>
+                                        </div>
+                                        <h2 class="title">
+                                            <a asp-route="client-blog-index">@item.Title</a>
+                                        </h2>
+                                        <p class="short-desc mb-7">
+                                            @item.Content
+                                        </p>
+                                    </div>
+                                    <div class="blog-img img-hover-effect">
+                                        <a asp-route="client-blog-index">
+                                            @if (item.IsImage == true)
+                                            {
+
+                                                <img class="img-full"
+                                             src="~/@item.BlogFiles"
+                                             alt="Blog Image" />
+                                            }
+                                            @if (item.IsVideo == true)
+                                            {
+                                                <video width="320" height="240" controls>
+                                                    <source src="~/@item.BlogFiles" type="video/mp4">
+                                                </video>
+                                            }
+                                        </a>
+                                        <div class="inner-btn-wrap">
+                                            <a class="inner-btn" href="blog.html">
+                                                <i class="pe-7s-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

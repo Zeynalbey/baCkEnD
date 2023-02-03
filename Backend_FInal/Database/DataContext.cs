@@ -14,6 +14,12 @@ namespace Backend_Final.Database
         {
 
         }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
+        public DbSet<BlogAndBlogCategory> BlogAndBlogCategories { get; set; }
+        public DbSet<BlogAndBlogTag> BlogAndBlogTags { get; set; }
+        public DbSet<BlogDisplay> BlogDisplays { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<ProductColor> ProductColors { get; set; }

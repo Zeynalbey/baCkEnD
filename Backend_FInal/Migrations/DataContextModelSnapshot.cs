@@ -44,7 +44,7 @@ namespace BackendFinal.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.BasketProduct", b =>
@@ -76,7 +76,7 @@ namespace BackendFinal.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketProducts");
+                    b.ToTable("BasketProducts", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Category", b =>
@@ -197,7 +197,7 @@ namespace BackendFinal.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Navbar", b =>
@@ -222,7 +222,7 @@ namespace BackendFinal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Navbars");
+                    b.ToTable("Navbars", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Order", b =>
@@ -249,7 +249,7 @@ namespace BackendFinal.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.OrderProduct", b =>
@@ -287,7 +287,7 @@ namespace BackendFinal.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Payment", b =>
@@ -312,7 +312,7 @@ namespace BackendFinal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Product", b =>
@@ -579,7 +579,7 @@ namespace BackendFinal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Sliders", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.SubNavbar", b =>
@@ -608,7 +608,7 @@ namespace BackendFinal.Migrations
 
                     b.HasIndex("NavbarId");
 
-                    b.ToTable("SubNavbars");
+                    b.ToTable("SubNavbars", (string)null);
                 });
 
             modelBuilder.Entity("Backend_Final.Database.Models.Tag", b =>

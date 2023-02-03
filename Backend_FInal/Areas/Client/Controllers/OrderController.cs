@@ -15,7 +15,6 @@ namespace Backend_Final.Areas.Client.Controllers
     public class OrderController : Controller
     {
         private readonly DataContext _dataContext;
-        private readonly IFileService _fileService;
         private readonly IUserService _userService;
         private readonly IOrderService _orderService;
         public OrderController(
@@ -25,7 +24,6 @@ namespace Backend_Final.Areas.Client.Controllers
             IOrderService orderService)
         {
             _dataContext = dataContext;
-            _fileService = fileService;
             _userService = userService;
             _orderService = orderService;
         }
@@ -79,7 +77,7 @@ namespace Backend_Final.Areas.Client.Controllers
 
             await _dataContext.SaveChangesAsync();
 
-            return RedirectToRoute("client-account-order");
+            return RedirectToRoute("client-account-orders");
 
 
             //*************************************************************
@@ -117,7 +115,7 @@ namespace Backend_Final.Areas.Client.Controllers
                 await _dataContext.Orders.AddAsync(order);
                 return order;
             }
-        } 
+        }
         #endregion
     }
 }

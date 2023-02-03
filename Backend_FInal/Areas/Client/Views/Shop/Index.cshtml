@@ -2,7 +2,7 @@
 @using Backend_Final.Areas.Client.ViewModels.Shop
 @model ShopViewModel
 
-<div class="breadcrumb-area breadcrumb-height"
+@*<div class="breadcrumb-area breadcrumb-height"
      data-bg-image="client/assets/images/breadcrumb/bg/1-1-1919x388.jpg">
     <div class="container h-100">
         <div class="row h-100">
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="single-product-area section-space-top-100">
     <div class="container">
@@ -111,8 +111,11 @@
                             </div>
                         </li>
                         <li class="add-to-cart">
-                            <a class="btn btn-custom-size lg-size btn-pronia-primary"
-                               href="cart.html">Add to cart</a>
+                            <a class="btn btn-custom-size lg-size btn-pronia-primary add-product-to-basket-btn"
+                               asp-route="client-basket-add"
+                               asp-route-id="@Model.Id"
+                               data-id="@Model.Id">Add to basket    
+                            </a>
                         </li>
                         <li class="wishlist-btn-wrap">
                             <a class="custom-circle-btn" href="wishlist.html">
@@ -124,11 +127,6 @@
                                 <i class="pe-7s-refresh-2"></i>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="service-item-wrap">
-
-                        @await Component.InvokeAsync(nameof(Payment))
-
                     </ul>
                     <div class="product-category">
                         <span class="title">SKU:</span>

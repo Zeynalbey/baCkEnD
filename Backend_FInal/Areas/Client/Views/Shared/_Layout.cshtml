@@ -28,8 +28,6 @@
     <link rel="stylesheet" href="~/client/assets/css/nice-select.css" />
     <link rel="stylesheet" href="~/client/assets/css/magnific-popup.min.css" />
     <link rel="stylesheet" href="~/client/assets/css/ion.rangeSlider.min.css" />
-    <script asp-append-version="true" src="~/client/assets/js/Modal/Modal.js"></script>
-    <script asp-append-version="true" src="~/client/assets/js/QuickModal.js"></script>
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="~/client/assets/css/style.css" />
@@ -106,7 +104,7 @@
                                     <a href="tel://+00-123-456-789">+00 123 456 789</a>
                                 </div>
 
-                                <a href="index.html" class="header-logo">
+                                <a asp-route="client-home-index" class="header-logo">
                                     <img src="~/client/assets/images/logo/dark.png" alt="Header Logo" />
                                 </a>
 
@@ -164,7 +162,6 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
                                             </a>
                                         </li>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
@@ -200,7 +197,7 @@
                     <div class="header-nav position-relative">
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-6">
-                                <a href="index.html" class="header-logo">
+                                <a asp-route="client-home-index" class="header-logo">
                                     <img src="~/client/assets/images/logo/dark.png" alt="Header Logo" />
                                 </a>
                             </div>
@@ -209,13 +206,13 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="index.html">Home</a>
+                                                <a asp-route="client-home-index">Home</a>
                                                 <ul class="drop-menu">
                                                     <li>
-                                                        <a href="index.html">Home One</a>
+                                                        <a asp-route="client-home-index">Home One</a>
                                                     </li>
                                                     <li>
-                                                        <a href="index-2.html">Home Two</a>
+                                                        <a asp-route="client-home-index">Home Two</a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -275,7 +272,8 @@
                                                                 <a href="my-account.html">My Account</a>
                                                             </li>
                                                             <li>
-                                                                <a href="login-register.html">Login | Register</a>
+                                                                <a asp-route="client-auth-login"> Login </a>
+                                                                <a asp-route="client-auth-register"> Register </a>
                                                             </li>
                                                             <li>
                                                                 <a href="cart.html">Shopping Cart</a>
@@ -351,7 +349,8 @@
                                                     <a class="dropdown-item" href="my-account.html">My account</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="login-register.html">Login | Register</a>
+                                                    <a class="dropdown-item" asp-route="client-auth-login">Login</a>
+                                                    <a class="dropdown-item" asp-route="client-auth-register">Register</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -363,7 +362,7 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity"></span>
                                             </a>
                                         </li>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
@@ -457,7 +456,7 @@
                                         </a>
                                         <ul class="sub-menu">
                                             <li>
-                                                <a href="index.html">
+                                                <a asp-route="client-home-index">
                                                     <span class="mm-text">Home One</span>
                                                 </a>
                                             </li>
@@ -729,7 +728,7 @@
                         <div class="col-lg-3">
                             <div class="footer-widget-item">
                                 <div class="footer-widget-logo">
-                                    <a href="index.html">
+                                    <a asp-route="client-home-index">
                                         <img src="~/client/assets/images/logo/dark.png" alt="Logo" />
                                     </a>
                                 </div>

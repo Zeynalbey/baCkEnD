@@ -50,7 +50,7 @@
                 @Model.Description
             </p>
 
-            <input type="hidden" id="productid-data" value="@Model.Id"/>
+            <input type="hidden" id="productid-data" value="@Model.Id" />
             <ul class="quantity-with-btn">
                 <li class="quantity">
                     <div class="cart-plus-minus">
@@ -60,8 +60,12 @@
                     </div>
                 </li>
                 <li class="add-to-cart">
-                    <span  onclick="addtobasket()" class="btn btn-custom-size lg-size btn-pronia-primary"
-                       >Add to cart</span>
+                    <a asp-route="client-basket-add"
+                       asp-route-id="@Model.Id"
+                       data-id="@Model.Id"
+                       class="add-product-to-basket-btn">
+                       Add to basket
+                   </a>
                 </li>
                 <li class="wishlist-btn-wrap">
                     <a class="custom-circle-btn" href="wishlist.html">

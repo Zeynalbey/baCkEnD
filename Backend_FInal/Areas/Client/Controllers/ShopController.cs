@@ -31,7 +31,7 @@ namespace Backend_Final.Areas.Client.Controllers
 
             if (product is null) return NotFound();          
 
-            var model = new ShopViewModel(product.Name!, product.Description!, product.Price,
+            var model = new ShopViewModel(product.Id,product.Name!, product.Description!, product.Price,
 
                 _dataContext.ProductImages.Where(p => p.ProductId == product.Id)
                 .Select(p => new ShopViewModel.ImageViewModeL(_fileService.GetFileUrl(p.ImageNameInFileSystem, UploadDirectory.Product))).ToList(),

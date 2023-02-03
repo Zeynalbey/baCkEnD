@@ -3,7 +3,7 @@
     public class ShopViewModel
     {
      
-
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -14,9 +14,10 @@
         public List<TagViewModeL> Tags { get; set; }
 
 
-        public ShopViewModel(string name, string description, decimal price, List<ImageViewModeL> images, 
+        public ShopViewModel(int id,string name, string description, decimal price, List<ImageViewModeL> images, 
             List<CatagoryViewModeL> catagories, List<ColorViewModeL> colors, List<SizeViewModeL> sizes, List<TagViewModeL> tags)
         {
+            Id = id;
             Name = name;
             Description = description;
             Price = price;

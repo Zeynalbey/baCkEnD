@@ -1,0 +1,51 @@
+﻿@using Backend_Final.Areas.Client.ViewModels.Blog
+@model List<BlogListViewModel>
+
+<div class="blog-item-wrap row g-y-30">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <div class="blog-item">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <ul>
+                            <li class="author">
+                                <a href="#">By: Admin</a>
+                            </li>
+                            <li class="date">@item.CreatedAt</li>
+                        </ul>
+                    </div>
+                    <h2 class="title">
+                        <a href="blog-detail.html">@item.Title</a>
+                    </h2>
+                    <p class="short-desc mb-7">
+                       @item.Content
+                    </p>
+                </div>
+                <div class="blog-img img-hover-effect">
+                    <a href="blog-detail.html">
+                        @if (item.IsImage == true)
+                        {
+
+                            <img class="img-full"
+                         src="~/@item.BlogFiles"
+                         alt="Blog Image" />
+                        }
+                        @if (item.IsVideo == true)
+                        {
+                            <video width="320" height="240" controls>
+                                <source src="~/@item.BlogFiles" type="video/mp4">
+                            </video>
+                        }
+                    </a>
+                    <div class="inner-btn-wrap">
+                        <a class="inner-btn" href="blog-detail.html">
+                            <i class="pe-7s-link"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

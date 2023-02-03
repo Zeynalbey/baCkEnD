@@ -53,12 +53,14 @@ namespace Backend_Final.Services.Concretes
                 else
                 {
                     var basket = await _dataContext.Baskets.FirstAsync(b => b.UserId == _userService.CurrentUser.Id);
+                    int count = 0;
+                    count++;
 
                     basketProduct = new BasketProduct
                     {
                         Quantity = 1,
                         BasketId = basket.Id,
-                        ProductId = product.Id,
+                        ProductId = product.Id,  
                     };
 
                     await _dataContext.BasketProducts.AddAsync(basketProduct);

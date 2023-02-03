@@ -1,0 +1,31 @@
+﻿@using Backend_Final.Areas.Client.ViewModels.OrderProducts
+@model OrdersProductsViewModel
+
+<div class="myaccount-orders">
+    <h4 class="small-title">MY ORDERS</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <th>Order name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price</td>
+                        <td>@item.Total</td>
+                        @*                    <td>
+                    <a href="#" class="btn btn-dark"><span>View</span></a>
+                    </td>*@
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>

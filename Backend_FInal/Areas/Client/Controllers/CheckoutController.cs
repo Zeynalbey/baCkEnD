@@ -20,7 +20,6 @@ namespace Backend_Final.Areas.Client.Controllers
     {
         private readonly DataContext _dataContext;
         private readonly IUserService _userService;
-        private readonly IFileService _fileService;
         private readonly IOrderService _orderService;
         private readonly INotificationService _notificationService;
 
@@ -33,7 +32,6 @@ namespace Backend_Final.Areas.Client.Controllers
         {
             _dataContext = dataContext;
             _userService = userService;
-            _fileService = fileService;
             _orderService = orderService;
             _notificationService = notificationService;
         }
@@ -66,62 +64,48 @@ namespace Backend_Final.Areas.Client.Controllers
         [HttpPost("place-order", Name = "client-checkout-place-order")]
         public async Task<IActionResult> PlaceOrder()
         {
+
             var basketProducts = await _dataContext.BasketProducts
-                    .Include(bp => bp.Product)
-                    .Where(bp => bp.Basket!.UserId == _userService.CurrentUser.Id)
-                    .ToListAsync();
+                   .Include(bp => bp.Product)
+                   .Where(bp => bp.Basket!.UserId == _userService.CurrentUser.Id)
+                   .ToListAsync();
 
-            var order = await CreateOrderAsync();
+            if (basketProducts is null)
+            {
+                return NotFound();
+            }
+            var order = new Order
+            {
+                Id = await _orderService.GenerateUniqueTrackingCodeAsync(),
+                UserId = _userService.CurrentUser.Id,
+                Status = Database.Models.Enums.OrderStatus.Created,
+            };
 
-            await CreateAndFulfillOrderProductsAsync(order, basketProducts);
+            await _dataContext.Orders.AddAsync(order);
+
+            foreach (var basketProduct in basketProducts)
+            {
+                var orderProduct = new OrderProduct
+                {
+                    OrderId = order.Id,
+                    ProductId = basketProduct.ProductId,
+                    Price = basketProduct.Product!.Price,
+                    Quantity = basketProduct.Quantity,
+                    Total = basketProduct.Quantity * basketProduct.Product!.Price,
+                };
+
+                await _dataContext.AddAsync(orderProduct);
+            }
 
             order.Total = order.OrderProducts!.Sum(op => op.Total);
 
-            await ResetBasketAsync(basketProducts);
+            _dataContext.RemoveRange(basketProducts);
 
             await _dataContext.SaveChangesAsync();
 
             await _notificationService.SenOrderCreatedToAdmin(order.Id);
 
-            return RedirectToRoute("client-account-dashboard");
-
-
-
-            async Task ResetBasketAsync(List<BasketProduct> basketProducts)
-            {
-                await Task.Run(() => _dataContext.RemoveRange(basketProducts));
-            }
-
-            async Task CreateAndFulfillOrderProductsAsync(Order order, List<BasketProduct> basketProducts)
-            {
-                foreach (var basketProduct in basketProducts)
-                {
-                    var orderProduct = new OrderProduct
-                    {
-                        OrderId = order.Id,
-                        ProductId = basketProduct.ProductId,
-                        Price = basketProduct.Product!.Price,
-                        Quantity = basketProduct.Quantity,
-                        Total = basketProduct.Quantity * basketProduct.Product!.Price,
-                    };
-
-                    await _dataContext.AddAsync(orderProduct);
-                }
-            }
-
-            async Task<Order> CreateOrderAsync()
-            {
-                var order = new Order
-                {
-                    Id = await _orderService.GenerateUniqueTrackingCodeAsync(),
-                    UserId = _userService.CurrentUser.Id,
-                    Status = Database.Models.Enums.OrderStatus.Created,
-                };
-
-                await _dataContext.Orders.AddAsync(order);
-
-                return order;
-            }
+            return RedirectToRoute("client-account-orders");
         }
     }
 }

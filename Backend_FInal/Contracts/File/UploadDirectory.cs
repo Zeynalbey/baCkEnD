@@ -5,6 +5,7 @@
         Product = 1,
         Slider = 2,
         Payment = 4,
-        FeedBack = 4,
+        FeedBack = 5,
+        Blog = 6
     }
 }
