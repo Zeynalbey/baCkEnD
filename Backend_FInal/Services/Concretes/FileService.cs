@@ -60,6 +60,8 @@ namespace Backend_Final.Services.Concretes
                     return Path.Combine(startPath, "Sliders");
                 case UploadDirectory.Product:
                     return Path.Combine(startPath, "Products");
+                case UploadDirectory.Blog:
+                    return Path.Combine(startPath, "Blogs");
                 default:
                     throw new Exception("Something went wrong");
             }
@@ -82,6 +84,8 @@ namespace Backend_Final.Services.Concretes
                     return $"{initialSegment}/Sliders/{fileName}";
                 case UploadDirectory.Product:
                     return $"{initialSegment}/Products/{fileName}";
+                case UploadDirectory.Blog:
+                    return $"{initialSegment}/Blogs/{fileName}";
                 default:
                     throw new Exception("Something went wrong");
             }

@@ -33,7 +33,7 @@
                             <tr>
                                 <td>@blog.Title</td>
                                 <td>@blog.Content</td>
-                                <td>@string.Join(", ", blog.Categories.Select(c => $"{c.Title}->{c.ParentTitle}"))</td>
+                                <td>@string.Join(", ", blog.Categories.Select(c => $"{c.Title}"))</td>
                                 <td class="text-end">
 
                                     <a asp-route="admin-blog-update" asp-route-id="@blog.Id"><i class="las la-pen text-secondary font-16"></i></a>

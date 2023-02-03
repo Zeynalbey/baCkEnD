@@ -30,10 +30,9 @@ namespace Backend_Final.Areas.Client.ViewComponents
                 : String.Empty,
                 b.BlogDisplays!.FirstOrDefault()!.IsImage,
                 b.BlogDisplays!.FirstOrDefault()!.IsVidio,
-                b.CreatedAt,
                 b.BlogAndTags!.Select(b => b.Tag).Select(b => new BlogListViewModel.TagViewModel(b.Title)).ToList(),
                 b.BlogAndCategories!.Select(b => b.Category)
-                .Select(b => new BlogListViewModel.CategoryViewModeL(b.Title, b.Parent!.Title)).ToList()
+                .Select(b => new BlogListViewModel.CategoryViewModeL(b.Title)).ToList()
                 )).ToListAsync();
 
             return View(model);

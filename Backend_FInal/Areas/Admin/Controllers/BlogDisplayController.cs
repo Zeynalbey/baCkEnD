@@ -43,8 +43,7 @@ namespace DemoApplication.Areas.Admin.Controllers
                 Id = p.Id,
                 FileUrl = _fileService.GetFileUrl(p.FileNameInSystem, UploadDirectory.Blog),
                 IsImage = p.IsImage,
-                IsVideo = p.IsVidio,
-                CreatedAt = p.CreatedAt
+                IsVideo = p.IsVidio
             }).ToList();
 
             return View(model);

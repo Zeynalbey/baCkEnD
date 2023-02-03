@@ -33,12 +33,12 @@ namespace DemoApplication.Areas.Admin.Controllers
         public async Task<IActionResult> List()
         {
 
-            var model = await _dataContext.Blogs.OrderByDescending(p => p.CreatedAt)
-                .Select(p => new BlogListItemViewModel(p.Id, p.Title, p.Content, p.CreatedAt,
+            var model = await _dataContext.Blogs.OrderByDescending(p => p.Title)
+                .Select(p => new BlogListItemViewModel(p.Id, p.Title, p.Content,
                 p.BlogAndTags!.Select(ps => ps.Tag)
                 .Select(s => new BlogListItemViewModel.TagViewModel(s.Title)).ToList(),
                 p.BlogAndCategories!.Select(pc => pc.Category)
-                .Select(c => new BlogListItemViewModel.CategoryViewModeL(c.Title, c.Parent!.Title)).ToList()
+                .Select(c => new BlogListItemViewModel.CategoryViewModeL(c.Title)).ToList()
               
                 )).ToListAsync();
 
@@ -127,8 +127,7 @@ namespace DemoApplication.Areas.Admin.Controllers
                 var product = new Blog
                 {
                     Title = model.Title,
-                    Content = model.Content,
-                    CreatedAt = DateTime.Now,
+                    Content = model.Content
                 };
 
 
